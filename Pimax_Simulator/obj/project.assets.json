@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Carlos\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+      "projectUniqueName": "C:\\Users\\Carlos\\source\\GitHub\\Carlos200456\\Pimax_Similator\\Pimax_Simulator\\Pimax_Simulator.csproj",
       "projectName": "Pimax_Simulator",
-      "projectPath": "C:\\Users\\Carlos\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+      "projectPath": "C:\\Users\\Carlos\\source\\GitHub\\Carlos200456\\Pimax_Similator\\Pimax_Simulator\\Pimax_Simulator.csproj",
       "packagesPath": "C:\\Users\\Carlos\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Carlos\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\obj\\",
+      "outputPath": "C:\\Users\\Carlos\\source\\GitHub\\Carlos200456\\Pimax_Similator\\Pimax_Simulator\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Carlos\\AppData\\Roaming\\NuGet\\NuGet.Config",
