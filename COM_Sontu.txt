@@ -1,0 +1,219 @@
+
+
+14:56:30.34 [COM1] - <LF>   <== Entrada en VXvue
+PI<CR>
+
+14:56:30.36 [COM7] - <LF>
+TPSN004<CR><LF>
+V1.2<CR><LF>
+KVS060<CR><LF>
+MAS125<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR><LF>
+FL<CR><LF>               <== Focus Large
+KVS060<CR><LF>
+MAS125<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR><LF>
+PI<CR>
+
+14:56:30.82 [COM1] - <LF>
+F?<CR><LF>               <== Focus ?
+KV?<CR>
+
+14:56:31.04 [COM7] - <LF>
+KVS060<CR>
+
+14:56:31.31 [COM1] - <LF>
+MA?<CR>
+
+14:56:31.34 [COM7] - <LF>
+MAS125<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR>
+
+14:56:31.58 [COM1] - <LF>
+MS?<CR>
+
+14:56:31.59 [COM7] - <LF>
+MSS20.0<CR><LF>
+MXS2.50<CR>
+
+14:56:34.74 [COM1] - <LF>   <== Handshake de VXvue
+KV?<CR>
+
+14:56:34.74 [COM7] - <LF>
+KVS060<CR>
+
+14:56:37.77 [COM1] - <LF>
+KV?<CR>
+
+14:56:37.77 [COM7] - <LF>
+KVS060<CR>
+
+14:56:40.79 [COM1] - <LF>
+KV?<CR>
+
+14:56:40.82 [COM7] - <LF>
+KVS060<CR>
+
+14:56:43.85 [COM1] - <LF>
+KV?<CR>
+
+14:56:43.85 [COM7] - <LF>
+KVS060<CR>
+
+15:02:01.27 [COM1] - <LF>
+KV?<CR>
+
+15:02:01.28 [COM7] - <LF>
+KVS060<CR><LF>
+RIN1880<CR>                 <== Comienzo de Preparacion
+
+15:02:04.27 [COM1] - <LF>
+KV?<CR>
+
+15:02:06.21 [COM7] - <LF>
+PRI<CR><LF>                 <== Preparacion Ready
+KVS060<CR>
+
+15:02:07.31 [COM1] - <LF>
+KV?<CR>
+
+15:02:07.32 [COM7] - <LF>
+KVS060<CR><LF>
+PRO<CR>                     <== Preparacion Off
+
+15:02:10.33 [COM1] - <LF>
+KV?<CR>
+
+15:02:10.33 [COM7] - <LF>
+KVS060<CR>
+
+15:04:23.38 [COM1] - <LF>
+KV?<CR>
+
+15:04:23.38 [COM7] - <LF>
+KVS060<CR><LF>
+PO<CR>                     <== Power Off
+
+
+TPSN004<CR><LF>            <== Power On Generador
+V1.2<CR><LF>
+KVS060<CR><LF>
+MAS125<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR><LF>
+FL<CR><LF>
+KVS060<CR><LF>
+MAS125<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR><LF>
+PI<CR>                   <== Power On
+
+15:05:36.69 [COM1] - <LF>
+F?<CR><LF>
+KV?<CR>
+
+15:05:36.99 [COM7] - <LF>
+FL<CR><LF>
+KVS060<CR><LF>
+
+RIN1910<CR>                 <== Comienzo de Preparacion con Stator
+
+15:09:03.42 [COM1] - <LF>
+KV?<CR>
+
+15:09:05.47 [COM7] - <LF>
+PRI<CR><LF>
+KVS060<CR>
+
+15:09:06.44 [COM1] - <LF>
+KV?<CR>
+
+15:09:06.45 [COM7] - <LF>
+KVS060<CR><LF>
+XRII<CR><LF>               <== 2° Tiempo
+DR_Prep<CR><LF>
+XROI<CR><LF>               <== Fin Rayos X
+0000<CR><LF>
+TC000.0<CR><LF>
+PRO<CR>                    <== Fin Preparacion
+
+15:09:09.48 [COM1] - <LF>
+KV?<CR>
+
+15:09:09.48 [COM7] - <LF>
+KVS060<CR>
+
+15:09:12.48 [COM1] - <LF>
+KV?<CR>
+
+15:09:12.48 [COM7] - <LF>
+KVS060<CR>
+
+15:51:27.70 [RX] - <LF>
+FS<CR><LF>               <== Focus Small
+KV?<CR>
+
+15:51:31.71 [TX] - KVS060<CR><LF>
+
+Ordenes de entrada:
+KV?<CR><LF>
+MA?<CR><LF>   \
+MS?<CR><LF>   / Cualquier comando produce Respuesta combinada 2
+F?<CR><LF>
+
+KV+<CR><LF>
+KV-<CR><LF>
+MA+<CR><LF>   \
+MA-<CR><LF>    \
+MS+<CR><LF>     \
+MS-<CR><LF>     / Cualquier comando produce Respuesta combinada 2
+MX+<CR><LF>    /
+MX-<CR><LF>   /
+FS<CR><LF>
+FL<CR><LF>
+
+Respuestas:
+1) Simple una linea
+KVS062<CR><LF>
+FS<CR><LF>
+FL<CR><LF>
+
+2) Combinada Multiples lineas
+MAS125<CR><LF>
+MSS20.0<CR><LF>
+MXS2.50<CR><LF>
+FS<CR><LF> ó FL<CR><LF>
+
+
+ER01<CR><LF>	EEPROM Error
+ER02<CR><LF>	Filament Value Error
+ER03<CR><LF>	Filament Error
+ER04<CR><LF>	Stator Anode Error
+ER05<CR><LF>	Driver Error
+ER06<CR><LF>	Positive KV Overshoot
+ER07<CR><LF>	Negative KV Overshoot
+ER08<CR><LF>	Positive mA Overshoot
+ER09<CR><LF>	Negative mA Overshoot
+ER10<CR><LF>	Boot Faliure
+ER11<CR><LF>	Bucky Error
+ER12<CR><LF>	Power Pin Error
+ER13<CR><LF>	Prep Pin Error
+ER14<CR><LF>	Exposure Pin Error
+ER15<CR><LF>	Undefined Error:15
+....
+ERxx<CR><LF>	Undefined Error:xx
