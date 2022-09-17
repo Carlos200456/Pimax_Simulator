@@ -9,19 +9,24 @@
     ".NETFramework,Version=v4.8": []
   },
   "packageFolders": {
-    "C:\\Users\\carlo\\.nuget\\packages\\": {}
+    "C:\\Users\\carlo\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\carlo\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+      "projectUniqueName": "C:\\Users\\carlo\\source\\repos\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
       "projectName": "Pimax_Simulator",
-      "projectPath": "C:\\Users\\carlo\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+      "projectPath": "C:\\Users\\carlo\\source\\repos\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
       "packagesPath": "C:\\Users\\carlo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\carlo\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\obj\\",
+      "outputPath": "C:\\Users\\carlo\\source\\repos\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\carlo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -33,6 +38,7 @@
       },
       "frameworks": {
         "net48": {
+          "targetAlias": "net48",
           "projectReferences": {}
         }
       },
@@ -44,7 +50,8 @@
     },
     "frameworks": {
       "net48": {
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "targetAlias": "net48",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {

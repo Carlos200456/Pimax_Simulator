@@ -3,7 +3,7 @@ VERSION
 
 COMMSETTINGS
 0
-4
+8
 7
 19200
 2
@@ -77,4 +77,80 @@ MA-
 4D 41 2D 0D 0A
 0
 5
+
+SEND
+9
+MS+
+4D 53 2B 0D 0A
+0
+5
+
+SEND
+10
+MS-
+4D 53 2D 0D 0A
+0
+5
+
+SEND
+11
+FS
+46 53 0D 0A
+0
+5
+
+SEND
+12
+FL
+46 4C 0D 0A
+0
+5
+
+RECEIVE
+0
+Prep On
+52 49 4E 31 38 38 30
+1
+1
+COMMENT 
+0
+1
+0
+0
+
+RECEIVE
+1
+Prep Ready
+50 52 49
+1
+1
+COMMENT 
+0
+1
+0
+0
+
+RECEIVE
+2
+Prp Off
+50 52 4F
+1
+1
+COMMENT 
+0
+1
+0
+0
+
+RECEIVE
+3
+Fin X-Ray
+58 52 4F 49
+1
+1
+COMMENT 
+0
+1
+0
+0
 

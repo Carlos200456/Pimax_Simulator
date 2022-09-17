@@ -43,6 +43,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxmAs = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonPREP
@@ -177,11 +180,44 @@
             this.label4.TabIndex = 98;
             this.label4.Text = "Foco";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(22, 108);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(63, 35);
+            this.button1.TabIndex = 99;
+            this.button1.Text = "Driver Error";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(150, 108);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(63, 35);
+            this.button2.TabIndex = 100;
+            this.button2.Text = "Filament Error";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(220, 108);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(63, 35);
+            this.button3.TabIndex = 101;
+            this.button3.Text = "Stator Error";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(412, 175);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxmAs);
@@ -219,6 +255,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxmAs;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }
 
