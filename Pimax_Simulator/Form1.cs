@@ -32,8 +32,13 @@ namespace Pimax_Simulator
             InitializeComponent();
             OpenSerial();
             kvs = 60;
-            mas = 50;
-            mss = 50;
+            mas = 200;
+            mss = 100;
+            textBoxKv.Text = kvs.ToString();
+            textBoxmA.Text = mas.ToString();
+            textBoxms.Text = mss.ToString();
+            mxs = (float)(mas * mss) / 1000;
+            textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
             this.TopMost = true;
             // Thread.CurrentCulture.NumberFormat.NumberDecimalSeparator = ".";
         }
@@ -42,7 +47,7 @@ namespace Pimax_Simulator
         {
             dataOUT = "RIN1880";
             serialPort1.WriteLine(dataOUT + "\r");
-            Thread.Sleep(500);
+            Thread.Sleep(300);
             dataOUT = "PRI"; 
             serialPort1.WriteLine(dataOUT + "\r");
         }
@@ -150,11 +155,6 @@ namespace Pimax_Simulator
             {
                 case "PI\r":
                     mxs = (float)(mas * mss) / 1000;
-                    textBoxKv.Text = kvs.ToString();
-                    textBoxmA.Text = mas.ToString();
-                    textBoxms.Text = mss.ToString();
-                    textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
-
                     if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MAS" + mas.ToString();
@@ -224,7 +224,7 @@ namespace Pimax_Simulator
                     }
                     dataOUT = "MAS" + textBoxmA.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
-                    dataOUT = "MXS" + mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    dataOUT = "MXS" + textBoxmAs.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -295,7 +295,7 @@ namespace Pimax_Simulator
 
                 case "FS\r":
                     textBoxmA.Text = mA_Table[1];
-                    mas = 100;
+                    mas = Convert.ToInt32(mA_Table[1]);
                     mxs = (float)(mas * mss) / 1000;
                     textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     dataOUT = "MAS" + textBoxmA.Text;
@@ -308,7 +308,7 @@ namespace Pimax_Simulator
 
                 case "FL\r":
                     textBoxmA.Text = mA_Table[2];
-                    mas = 200;
+                    mas = Convert.ToInt32(mA_Table[2]);
                     mxs = (float)(mas * mss) / 1000;
                     textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     dataOUT = "MAS" + textBoxmA.Text;
