@@ -23,52 +23,57 @@ namespace Pimax_Simulator
         int kvs, mas, mss;
         float mxs;
 
+        StringBuilder sb = new StringBuilder();
+        char LF = (char)10;
+        char CR = (char)13;
+
         public Form1()
         {
             InitializeComponent();
             OpenSerial();
             kvs = 60;
-            mas = 500;
-            mss = 100;
-
+            mas = 50;
+            mss = 50;
+            this.TopMost = true;
+            // Thread.CurrentCulture.NumberFormat.NumberDecimalSeparator = ".";
         }
 
         private void buttonPREP_Click(object sender, EventArgs e)
         {
             dataOUT = "RIN1880";
-            serialPort1.WriteLine(dataOUT);
+            serialPort1.WriteLine(dataOUT + "\r");
             Thread.Sleep(500);
             dataOUT = "PRI"; 
-            serialPort1.WriteLine(dataOUT);
+            serialPort1.WriteLine(dataOUT + "\r");
         }
 
         private void buttonRX_Click(object sender, EventArgs e)
         {
             dataOUT = "XRII";
-            serialPort1.WriteLine(dataOUT);
+            serialPort1.WriteLine(dataOUT + "\r");
             dataOUT = "XROI";
-            serialPort1.WriteLine(dataOUT);
+            serialPort1.WriteLine(dataOUT + "\r");
             Thread.Sleep(500);
             dataOUT = "PRO";
-            serialPort1.WriteLine(dataOUT);
+            serialPort1.WriteLine(dataOUT + "\r");
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             dataOUT = "ER05";
-            serialPort1.WriteLine(dataOUT);
+            serialPort1.WriteLine(dataOUT + "\r");
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             dataOUT = "ER03";
-            serialPort1.WriteLine(dataOUT);
+            serialPort1.WriteLine(dataOUT + "\r");
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             dataOUT = "ER04";
-            serialPort1.WriteLine(dataOUT);
+            serialPort1.WriteLine(dataOUT + "\r");
         }
 
         public void OpenSerial()
@@ -89,21 +94,48 @@ namespace Pimax_Simulator
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            var watch = new System.Diagnostics.Stopwatch();
-            watch.Start();
+            // var watch = new System.Diagnostics.Stopwatch();
+            // watch.Start();
             // Proceso a medir
             // Aqui
-            watch.Stop();
+            // watch.Stop();
             // Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
 
-            dataIN = serialPort1.ReadLine();
-            try
+            // dataIN = serialPort1.ReadLine();
+
+            string Data = serialPort1.ReadExisting();
+
+            foreach (char c in Data)
             {
-                this.Invoke(new EventHandler(ShowData));
-            }
-            catch (Exception err)
-            {
-                // MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (c == LF)
+                {
+                    sb.Append(c);
+                    sb.Clear(); 
+                }
+                else
+                {
+                    if (c == CR)
+                    {
+                        sb.Append(c);
+
+                        dataIN = sb.ToString();
+                        sb.Clear();
+
+                        //do something with your response 'CurrentLine'
+                        try
+                        {
+                            this.Invoke(new EventHandler(ShowData));
+                        }
+                        catch (Exception err)
+                        {
+                            // MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        sb.Append(c);
+                    }
+                }
             }
         }
 
@@ -114,74 +146,67 @@ namespace Pimax_Simulator
             ACK = false;
             NACK = false;
             
-            if (dataIN == "PI\r")
-            {
-                
-            }
-
             switch (msg)
             {
                 case "PI\r":
                     mxs = (float)(mas * mss) / 1000;
                     textBoxKv.Text = kvs.ToString();
-                    textBoxmA.Text = mas.ToString() + "\r";
-                    textBoxms.Text = mss.ToString() + "\r";
-                    textBoxmAs.Text = mxs.ToString();
+                    textBoxmA.Text = mas.ToString();
+                    textBoxms.Text = mss.ToString();
+                    textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
-                    dataOUT = "KVS" + kvs.ToString();
-                    serialPort1.WriteLine(dataOUT);
+                    if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
+                    serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MAS" + mas.ToString();
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MSS" + mss.ToString();
-                    serialPort1.WriteLine(dataOUT);
-                    dataOUT = "MXS" + mxs.ToString();
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    dataOUT = "MXS" + mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    dataOUT = "PI";
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "F?\r":
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "KV?\r":
-                    dataOUT = "KVS" + kvs.ToString();
-                    serialPort1.WriteLine(dataOUT);
+                    if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "MA?\r":
                     dataOUT = "MAS" + mas.ToString();
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MSS" + mss.ToString();
-                    serialPort1.WriteLine(dataOUT);
-                    dataOUT = "MXS" + mxs.ToString();
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    dataOUT = "MXS" + mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "MS?\r":
-                    dataOUT = "MAS" + mas.ToString();
-                    serialPort1.WriteLine(dataOUT);
                     dataOUT = "MSS" + mss.ToString();
-                    serialPort1.WriteLine(dataOUT);
-                    dataOUT = "MXS" + mxs.ToString();
-                    serialPort1.WriteLine(dataOUT);
-                    if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    dataOUT = "MXS" + mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "KV+\r":
                     if (kvs < 125) kvs += 1;
                     textBoxKv.Text = kvs.ToString();
                     if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "KV-\r":
                     if (kvs > 35) kvs -= 1;
                     textBoxKv.Text = kvs.ToString();
                     if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "MA+\r":
@@ -195,16 +220,14 @@ namespace Pimax_Simulator
                         textBoxmA.Text = mA_Table[mA];
                         mas = Convert.ToInt32(textBoxmA.Text);
                         mxs = (float)(mas * mss) / 1000;
-                        textBoxmAs.Text = mxs.ToString();
+                        textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     }
                     dataOUT = "MAS" + textBoxmA.Text;
-                    serialPort1.WriteLine(dataOUT);
-                    dataOUT = "MSS" + textBoxms.Text;
-                    serialPort1.WriteLine(dataOUT);
-                    dataOUT = "MXS" + mxs.ToString();
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    dataOUT = "MXS" + mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "MA-\r":
@@ -218,16 +241,14 @@ namespace Pimax_Simulator
                         textBoxmA.Text = mA_Table[mA];
                         mas = Convert.ToInt32(textBoxmA.Text);
                         mxs = (float)(mas * mss) / 1000;
-                        textBoxmAs.Text = mxs.ToString();
+                        textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     }
                     dataOUT = "MAS" + textBoxmA.Text;
-                    serialPort1.WriteLine(dataOUT);
-                    dataOUT = "MSS" + textBoxms.Text;
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "MS+\r":
@@ -241,16 +262,14 @@ namespace Pimax_Simulator
                         textBoxms.Text = ms_Table[mA];
                         mss = Convert.ToInt32(textBoxms.Text);
                         mxs = (float)(mas * mss) / 1000;
-                        textBoxmAs.Text = mxs.ToString();
+                        textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     }
-                    dataOUT = "MAS" + textBoxmA.Text;
-                    serialPort1.WriteLine(dataOUT);
                     dataOUT = "MSS" + textBoxms.Text;
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "MS-\r":
@@ -264,46 +283,40 @@ namespace Pimax_Simulator
                         textBoxms.Text = ms_Table[mA];
                         mss = Convert.ToInt32(textBoxms.Text);
                         mxs = (float)(mas * mss) / 1000;
-                        textBoxmAs.Text = mxs.ToString();
+                        textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     }
-                    dataOUT = "MAS" + textBoxmA.Text;
-                    serialPort1.WriteLine(dataOUT);
                     dataOUT = "MSS" + textBoxms.Text;
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "FS\r":
                     textBoxmA.Text = mA_Table[1];
                     mas = 100;
                     mxs = (float)(mas * mss) / 1000;
-                    textBoxmAs.Text = mxs.ToString();
+                    textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     dataOUT = "MAS" + textBoxmA.Text;
-                    serialPort1.WriteLine(dataOUT);
-                    dataOUT = "MSS" + textBoxms.Text;
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "FL\r":
                     textBoxmA.Text = mA_Table[2];
                     mas = 200;
                     mxs = (float)(mas * mss) / 1000;
-                    textBoxmAs.Text = mxs.ToString();
+                    textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     dataOUT = "MAS" + textBoxmA.Text;
-                    serialPort1.WriteLine(dataOUT);
-                    dataOUT = "MSS" + textBoxms.Text;
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
-                    serialPort1.WriteLine(dataOUT);
+                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 default:
