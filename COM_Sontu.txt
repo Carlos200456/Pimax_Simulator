@@ -173,7 +173,7 @@ KV?<CR>
 Ordenes de entrada:
 KV?<CR><LF>
 MA?<CR><LF>   \
-MS?<CR><LF>   / Cualquier comando produce Respuesta combinada 2
+MS?<CR><LF>   / Cualquier comando produce Respuesta Simple 1
 F?<CR><LF>
 
 KV+<CR><LF>
@@ -186,6 +186,9 @@ MX+<CR><LF>    /
 MX-<CR><LF>   /
 FS<CR><LF>
 FL<CR><LF>
+
+V071I2000T00200<CR>      71KV 200mA 20ms. Set combinado de valores
+                         No es necesario responder KVS, MAS, MSS, MXS y FS o FL pregunta todo el soft
 
 Respuestas:
 1) Simple una linea

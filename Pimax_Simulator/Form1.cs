@@ -150,11 +150,35 @@ namespace Pimax_Simulator
             int mA;
             ACK = false;
             NACK = false;
+
+            if (dataIN.Substring(0, 1) == "V") msg = "VIT\r";
             
             switch (msg)
             {
                 case "PI\r":
+                    if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    dataOUT = "MAS" + mas.ToString();
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    dataOUT = "MSS" + mss.ToString();
+                    serialPort1.WriteLine(dataOUT + "\r");
                     mxs = (float)(mas * mss) / 1000;
+                    dataOUT = "MXS" + mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    dataOUT = "PI";
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    break;
+
+                case "VIT\r":
+                    kvs = Convert.ToInt32(dataIN.Substring(1,3));
+                    textBoxKv.Text = kvs.ToString();
+                    mas = Convert.ToInt32(dataIN.Substring(5,4)) / 10;
+                    textBoxmA.Text = mas.ToString() + "\r";
+                    mss = Convert.ToInt32(dataIN.Substring(10,5)) / 10;
+                    textBoxms.Text = mss.ToString() + "\r";
+                    mxs = (float)(mas * mss) / 1000;
+                    textBoxmAs.Text = mxs.ToString() + "\r";
+
                     if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MAS" + mas.ToString();
@@ -163,7 +187,7 @@ namespace Pimax_Simulator
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     serialPort1.WriteLine(dataOUT + "\r");
-                    dataOUT = "PI";
+                    if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
