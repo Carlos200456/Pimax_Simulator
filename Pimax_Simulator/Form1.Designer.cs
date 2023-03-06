@@ -46,6 +46,11 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.serialPort2 = new System.IO.Ports.SerialPort(this.components);
+            this.textBoxER = new System.Windows.Forms.TextBox();
+            this.textBoxVCC = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.buttonLuzCol = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonPREP
@@ -53,7 +58,7 @@
             this.buttonPREP.Location = new System.Drawing.Point(298, 8);
             this.buttonPREP.Margin = new System.Windows.Forms.Padding(2);
             this.buttonPREP.Name = "buttonPREP";
-            this.buttonPREP.Size = new System.Drawing.Size(103, 76);
+            this.buttonPREP.Size = new System.Drawing.Size(103, 90);
             this.buttonPREP.TabIndex = 0;
             this.buttonPREP.Text = "PREP";
             this.buttonPREP.UseVisualStyleBackColor = true;
@@ -61,10 +66,10 @@
             // 
             // buttonRX
             // 
-            this.buttonRX.Location = new System.Drawing.Point(298, 89);
+            this.buttonRX.Location = new System.Drawing.Point(298, 102);
             this.buttonRX.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRX.Name = "buttonRX";
-            this.buttonRX.Size = new System.Drawing.Size(103, 76);
+            this.buttonRX.Size = new System.Drawing.Size(103, 90);
             this.buttonRX.TabIndex = 0;
             this.buttonRX.Text = "Rayos";
             this.buttonRX.UseVisualStyleBackColor = true;
@@ -182,39 +187,86 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(22, 108);
+            this.button1.Location = new System.Drawing.Point(22, 86);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(63, 35);
+            this.button1.Size = new System.Drawing.Size(63, 20);
             this.button1.TabIndex = 99;
-            this.button1.Text = "Driver Error";
+            this.button1.Text = "Driver";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(150, 108);
+            this.button2.Location = new System.Drawing.Point(22, 109);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(63, 35);
+            this.button2.Size = new System.Drawing.Size(63, 20);
             this.button2.TabIndex = 100;
-            this.button2.Text = "Filament Error";
+            this.button2.Text = "Filament";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(220, 108);
+            this.button3.Location = new System.Drawing.Point(22, 132);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(63, 35);
+            this.button3.Size = new System.Drawing.Size(63, 20);
             this.button3.TabIndex = 101;
-            this.button3.Text = "Stator Error";
+            this.button3.Text = "Stator";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // serialPort2
+            // 
+            this.serialPort2.BaudRate = 19200;
+            this.serialPort2.PortName = "COM2";
+            this.serialPort2.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort2_DataReceived);
+            // 
+            // textBoxER
+            // 
+            this.textBoxER.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxER.Location = new System.Drawing.Point(22, 163);
+            this.textBoxER.Name = "textBoxER";
+            this.textBoxER.Size = new System.Drawing.Size(254, 26);
+            this.textBoxER.TabIndex = 102;
+            this.textBoxER.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxVCC
+            // 
+            this.textBoxVCC.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxVCC.Location = new System.Drawing.Point(147, 101);
+            this.textBoxVCC.Name = "textBoxVCC";
+            this.textBoxVCC.Size = new System.Drawing.Size(65, 35);
+            this.textBoxVCC.TabIndex = 103;
+            this.textBoxVCC.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(155, 77);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(45, 20);
+            this.label5.TabIndex = 104;
+            this.label5.Text = "VCC";
+            // 
+            // buttonLuzCol
+            // 
+            this.buttonLuzCol.Location = new System.Drawing.Point(218, 95);
+            this.buttonLuzCol.Name = "buttonLuzCol";
+            this.buttonLuzCol.Size = new System.Drawing.Size(63, 57);
+            this.buttonLuzCol.TabIndex = 105;
+            this.buttonLuzCol.Text = "Luz Colimador";
+            this.buttonLuzCol.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(412, 175);
+            this.ClientSize = new System.Drawing.Size(412, 201);
+            this.Controls.Add(this.buttonLuzCol);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBoxVCC);
+            this.Controls.Add(this.textBoxER);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -258,6 +310,11 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.IO.Ports.SerialPort serialPort2;
+        private System.Windows.Forms.TextBox textBoxER;
+        private System.Windows.Forms.TextBox textBoxVCC;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button buttonLuzCol;
     }
 }
 
