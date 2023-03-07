@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 
 namespace Pimax_Simulator
 {
@@ -32,38 +33,90 @@ namespace Pimax_Simulator
         public Form1()
         {
             InitializeComponent();
-         //   OpenSerial();
+            OpenSerial();
             OpenSerial2();
-            kvs = 60;
-            mas = 200;
-            mss = 100;
-            textBoxKv.Text = kvs.ToString();
-            textBoxmA.Text = mas.ToString();
-            textBoxms.Text = mss.ToString();
-            mxs = (float)(mas * mss) / 1000;
-            textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            // kvs = 60; textBoxKv.Text = kvs.ToString();
+            // mas = 200; textBoxmA.Text = mas.ToString();
+            // mss = 100; textBoxms.Text = mss.ToString();
+            // mxs = (float)(mas * mss) / 1000;
+            // textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
             this.TopMost = true;
             // Thread.CurrentCulture.NumberFormat.NumberDecimalSeparator = ".";
         }
 
         private void buttonPREP_Click(object sender, EventArgs e)
         {
-            dataOUT = "RIN1880";
-            serialPort1.WriteLine(dataOUT + "\r");
-            Thread.Sleep(300);
-            dataOUT = "PRI";
+         //   dataOUT = "RIN1880";
+         //   serialPort1.WriteLine(dataOUT + "\r");
+         //   Thread.Sleep(300);
+         //   dataOUT = "PRI";
+         //   serialPort1.WriteLine(dataOUT + "\r");
+            if (serialPort2.IsOpen)
+            {
+                if (buttonPREP.BackColor == Color.LightSkyBlue)
+                {
+                    dataOUT = "PR1";
+                }
+                else
+                {
+                    dataOUT = "PR0";
+                }
+                serialPort2.WriteLine(dataOUT);
+            }
+
+        }
+
+        private void buttonRXOn_MouseDw(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (serialPort2.IsOpen)
+            {
+                dataOUT = "RX1";
+                serialPort2.WriteLine(dataOUT);
+                buttonRX.BackColor = Color.Yellow;
+                textBoxKv.BackColor = Color.Yellow;
+                textBoxmA.BackColor = Color.Yellow;
+                textBoxms.BackColor = Color.Yellow;
+                textBoxmAs.BackColor = Color.Yellow;
+                textBoxKv.Refresh();
+                textBoxmA.Refresh();
+                textBoxms.Refresh();
+                textBoxmAs.Refresh();
+                buttonRX.Refresh();
+            }
+        }
+
+        private void buttonRXOn_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (serialPort2.IsOpen)
+            {
+                dataOUT = "RX0";
+                serialPort2.WriteLine(dataOUT);
+                buttonRX.BackColor = Color.LightGray;
+            }
+            buttonRX.BackColor = Color.LightGray;
+            textBoxKv.BackColor = Color.White;
+            textBoxmA.BackColor = Color.White;
+            textBoxms.BackColor = Color.White;
+            textBoxmAs.BackColor = Color.White;
+            textBoxKv.Refresh();
+            textBoxmA.Refresh();
+            textBoxms.Refresh();
+            textBoxmAs.Refresh();
+            buttonRX.Refresh();
+            dataOUT = "PRO";
             serialPort1.WriteLine(dataOUT + "\r");
         }
 
+
         private void buttonRX_Click(object sender, EventArgs e)
         {
-            dataOUT = "XRII";
+         /*   dataOUT = "XRII";
             serialPort1.WriteLine(dataOUT + "\r");
             dataOUT = "XROI";
             serialPort1.WriteLine(dataOUT + "\r");
             Thread.Sleep(500);
             dataOUT = "PRO";
-            serialPort1.WriteLine(dataOUT + "\r");
+            serialPort1.WriteLine(dataOUT + "\r"); */
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -86,7 +139,7 @@ namespace Pimax_Simulator
 
         public void OpenSerial()     // Serial Port para la comunicacion con el Software Vieworks
         {
-            serialPort1.PortName = "COM7";
+            serialPort1.PortName = "COM1";
             serialPort1.BaudRate = int.Parse("19200");  // 115200  Valid values are 110, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, or 115200.
             serialPort1.DataBits = int.Parse("8");
             serialPort1.StopBits = (StopBits)Enum.Parse(typeof(StopBits), "One");
@@ -114,6 +167,60 @@ namespace Pimax_Simulator
             Thread.Sleep(50);
             serialPort2.DtrEnable = true;
             Thread.Sleep(100);
+        }
+
+        private void buttonPW_Click(object sender, EventArgs e)
+        {
+            if (serialPort2.IsOpen)
+            {
+                if (buttonPW.BackColor == Color.LightSkyBlue)
+                {
+                    dataOUT = "PW1";
+                    serialPort2.WriteLine(dataOUT);
+                }
+                else
+                {
+                    dataOUT = "PW0";
+                    serialPort2.WriteLine(dataOUT);
+                }
+            }
+
+        }
+
+        private void buttonHRST_Click(object sender, EventArgs e)
+        {
+            serialPort2.DtrEnable = false;
+            Thread.Sleep(50);
+            serialPort2.DtrEnable = true;
+            Thread.Sleep(100);
+            serialPort2.DtrEnable = false;
+            button1.BackColor = Color.LightGray;
+            button2.BackColor = Color.LightGray;
+            button3.BackColor = Color.LightGray;
+            buttonPW.BackColor = Color.LightGray;
+            buttonLuzCol.BackColor = Color.LightGray;
+            buttonPREP.BackColor = Color.LightGray;
+            buttonRX.BackColor = Color.LightGray;
+            buttonFF.BackColor = Color.LightGray;
+            buttonFG.BackColor = Color.LightGray;
+            textBoxER.Text = "";
+            textBox1.Text = "";
+            textBoxKv.Text = "";
+            textBoxmA.Text = "";
+            textBoxms.Text = "";
+            textBoxmAs.Text = "";
+            textBoxVCC.Text = "";
+            Refresh();
+        }
+
+        private void buttonLuzCol_Click(object sender, EventArgs e)
+        {
+            if (serialPort2.IsOpen)
+            {
+                if (buttonLuzCol.BackColor == Color.LightGray) dataOUT = "CL1"; else dataOUT = "CL0";
+                serialPort2.WriteLine(dataOUT);
+            }
+
         }
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)    // Data received from Software Vieworks
@@ -418,7 +525,7 @@ namespace Pimax_Simulator
         {
             DoubleBuffered = true;
             string msg;
-            if (dataIN.Length > 4) msg = dataIN.Remove(0, 4); else msg = "";
+            if (dataIN2.Length > 4) msg = dataIN2.Remove(0, 4); else msg = "";
             ACK = false;
             NACK = false;
             switch (message)
@@ -446,11 +553,15 @@ namespace Pimax_Simulator
                         case "IBE\r":
                             button1.BackColor = Color.Red;
                             textBoxER.Text = "Falla de Inversor";
+                            dataOUT = "ER05";
+                            serialPort1.WriteLine(dataOUT + "\r");
                             break;
 
                         case "IBZ\r":
                             button1.BackColor = Color.Red;  // Inverter error
                             textBoxER.Text = "GAT Desconectado";
+                            dataOUT = "ER05";
+                            serialPort1.WriteLine(dataOUT + "\r");
                             break;
 
                         case "FIL\r":
@@ -466,6 +577,9 @@ namespace Pimax_Simulator
                                 textBoxER.Text += " Grueso";
                                 buttonFG.BackColor = Color.Red;  // Large Filament error                 
                             }
+                            button2.BackColor = Color.Red;
+                            dataOUT = "ER03";
+                            serialPort1.WriteLine(dataOUT + "\r");
                             break;
 
                         case "FCC\r":
@@ -479,6 +593,9 @@ namespace Pimax_Simulator
                                 textBoxER.Text = "Filamento Grueso en Corto Circuito";
                                 buttonFG.BackColor = Color.Red;  // Large Filament CC error
                             }
+                            button2.BackColor = Color.Red;
+                            dataOUT = "ER03";
+                            serialPort1.WriteLine(dataOUT + "\r");
                             break;
 
                         case "TMP\r":
@@ -497,12 +614,18 @@ namespace Pimax_Simulator
                         case "UPW\r":
                             button1.BackColor = Color.Red;
                             textBoxER.Text = "Baja Tension en UPower";
+                            dataOUT = "ER05";
+                            serialPort1.WriteLine(dataOUT + "\r");
                             break;
 
                         case "CPM\r":
                             // Error Stator Boar Missing
                             textBoxER.Text = "Falta Placa Estator";
+                            button3.BackColor = Color.Red;
+                            dataOUT = "ER04";
+                            serialPort1.WriteLine(dataOUT + "\r");
                             break;
+
                         case "FPE1\r":
                             // Fin Prep Board Missing o Relay Pegado
                             textBoxER.Text = "Falla de Relay Preparacion";
@@ -515,36 +638,36 @@ namespace Pimax_Simulator
                     // buttonCal.BackColor = Color.RosyBrown;
                     break;
                 case "ET: ":
-                    // textBox1.Text = dataIN.Remove(0, 4);
+                    textBox1.Text = dataIN2.Remove(0, 4);
                     break;
                 case "SN: ":
-                    // textBoxSN.Text = dataIN.Remove(0, 4);
+                    // textBoxSN.Text = dataIN2.Remove(0, 4);
                     break;
                 case "Kv: ":
-                    textBoxKv.Text = dataIN.Remove(0, 4);
+                    textBoxKv.Text = dataIN2.Remove(0, 4);
                     kvs = Int32.Parse(textBoxKv.Text);
                     break;
                 case "mA: ":
-                    textBoxmA.Text = dataIN.Remove(0, 4);
+                    textBoxmA.Text = dataIN2.Remove(0, 4);
                     mas = Int32.Parse(textBoxmA.Text);
                     break;
                 case "SKv:":
-                    // textBoxSKv.Text = dataIN.Remove(0, 4);
+                    // textBoxSKv.Text = dataIN2.Remove(0, 4);
                     break;
                 case "SmA:":
-                    // textBoxSmA.Text = dataIN.Remove(0, 4);
+                    // textBoxSmA.Text = dataIN2.Remove(0, 4);
                     break;
                 case "ms: ":
-                    textBoxms.Text = dataIN.Remove(0, 4);
+                    textBoxms.Text = dataIN2.Remove(0, 4);
                     mss = Int32.Parse(textBoxms.Text);
                     break;
                 case "TST:":
-                    // textBoxTST.Text = dataIN.Remove(0, 4);
+                    // textBoxTST.Text = dataIN2.Remove(0, 4);
                     break;
                 case "FO: ":
                     buttonFF.ForeColor = Color.Yellow;
                     string fo;
-                    fo = dataIN.Remove(0, 4);
+                    fo = dataIN2.Remove(0, 4);
                     if (fo == "FF\r")
                     {
                             buttonFF.BackColor = Color.Green;
@@ -559,7 +682,7 @@ namespace Pimax_Simulator
                     }
                     break;
                 case "HO: ":
-                    // textBoxHO.Text = dataIN.Remove(0, 4);
+                    // textBoxHO.Text = dataIN2.Remove(0, 4);
                     break;
                 case "CAL:":
                     if (msg == "1\r")
@@ -581,7 +704,7 @@ namespace Pimax_Simulator
                     break;
 
                     case "VCC:":
-                    textBoxVCC.Text = dataIN.Remove(0, 4);
+                    textBoxVCC.Text = dataIN2.Remove(0, 4);
                     if (textBoxVCC.Text != "")
                     {
                         try
@@ -657,7 +780,7 @@ namespace Pimax_Simulator
                 case "POK:":
                     if (msg == "0\r")
                     {
-                        buttonPREP.BackColor = Color.LightSkyBlue;
+                        if(buttonPW.BackColor == Color.Blue) buttonPREP.BackColor = Color.LightSkyBlue;
                         buttonRX.BackColor = Color.LightGray;
                         textBoxKv.BackColor = Color.White;
                         textBoxmA.BackColor = Color.White;
@@ -678,7 +801,14 @@ namespace Pimax_Simulator
                     if (msg == "2\r")
                     {
                         buttonPREP.BackColor = Color.LightGreen;
+                        buttonPREP.Refresh();
+                        dataOUT = "RIN1880";                      // Enviar al Software VXvue el Preparacion OK
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        Thread.Sleep(300);
+                        dataOUT = "PRI";
+                        serialPort1.WriteLine(dataOUT + "\r");
                         buttonRX.BackColor = Color.Blue;
+                        buttonRX.Refresh();
                     }
                     break;
                 case "XOK:":
@@ -688,6 +818,10 @@ namespace Pimax_Simulator
                     }
                     if (msg == "1\r")
                     {
+                        dataOUT = "XRII";
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        dataOUT = "XROI";
+                        serialPort1.WriteLine(dataOUT + "\r");
                         buttonRX.BackColor = Color.Yellow;
                         textBoxKv.BackColor = Color.Yellow;
                         textBoxmA.BackColor = Color.Yellow;
@@ -712,6 +846,18 @@ namespace Pimax_Simulator
                 default:
                     break;
             }
+
+            if ((textBox1.Text == "OFF\r")) // || (textBox1.Text == "ERROR\r") || (textBox1.Text == "\r")
+            {
+                buttonPW.BackColor = Color.LightSkyBlue;
+                buttonPW.ForeColor = Color.DarkSlateGray;
+            }
+            if ((textBox1.Text == "IDLE\r") || (textBox1.Text == "ERROR\r") || (textBox1.Text == "RAD\r")) //
+            {
+                buttonPW.BackColor = Color.Blue;
+                buttonPW.ForeColor = Color.Yellow;
+            }
+
             if ((textBoxmA.Text != "") && (textBoxms.Text != ""))
             {
                 try

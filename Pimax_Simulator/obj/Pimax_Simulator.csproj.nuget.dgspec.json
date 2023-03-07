@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\crequejo.PIM\\Source\\Repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {}
+    "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\crequejo.PIM\\Source\\Repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {
+    "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\crequejo.PIM\\Source\\Repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+        "projectUniqueName": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
         "projectName": "Pimax_Simulator",
-        "projectPath": "C:\\Users\\crequejo.PIM\\Source\\Repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+        "projectPath": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
         "packagesPath": "C:\\Users\\crequejo.PIM\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\crequejo.PIM\\Source\\Repos\\Pimax_Simulator\\Pimax_Simulator\\obj\\",
+        "outputPath": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\crequejo.PIM\\AppData\\Roaming\\NuGet\\NuGet.Config",
