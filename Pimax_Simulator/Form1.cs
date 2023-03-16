@@ -35,13 +35,7 @@ namespace Pimax_Simulator
             InitializeComponent();
             OpenSerial();
             OpenSerial2();
-            // kvs = 60; textBoxKv.Text = kvs.ToString();
-            // mas = 200; textBoxmA.Text = mas.ToString();
-            // mss = 100; textBoxms.Text = mss.ToString();
-            // mxs = (float)(mas * mss) / 1000;
-            // textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
             this.TopMost = true;
-            // Thread.CurrentCulture.NumberFormat.NumberDecimalSeparator = ".";
         }
 
         private void buttonPREP_Click(object sender, EventArgs e)
@@ -139,7 +133,7 @@ namespace Pimax_Simulator
 
         public void OpenSerial()     // Serial Port para la comunicacion con el Software Vieworks
         {
-            serialPort1.PortName = "COM1";
+            serialPort1.PortName = "COM9";
             serialPort1.BaudRate = int.Parse("19200");  // 115200  Valid values are 110, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, or 115200.
             serialPort1.DataBits = int.Parse("8");
             serialPort1.StopBits = (StopBits)Enum.Parse(typeof(StopBits), "One");
@@ -155,7 +149,7 @@ namespace Pimax_Simulator
 
         public void OpenSerial2()     // Serial Port para la comunicacion con el Generador
         {
-            serialPort2.PortName = "COM9";
+            serialPort2.PortName = "COM1";
             serialPort2.BaudRate = int.Parse("38400");  // 115200  Valid values are 110, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, or 115200.
             serialPort2.DataBits = int.Parse("8");
             serialPort2.StopBits = (StopBits)Enum.Parse(typeof(StopBits), "One");
@@ -177,6 +171,11 @@ namespace Pimax_Simulator
                 {
                     dataOUT = "PW1";
                     serialPort2.WriteLine(dataOUT);
+                    this.Size = new Size(282, 98);
+                    this.Left = 680;
+                    this.Top = 1016;
+                    this.ControlBox = false;
+                    this.Text = "";
                 }
                 else
                 {
@@ -221,6 +220,11 @@ namespace Pimax_Simulator
                 serialPort2.WriteLine(dataOUT);
             }
 
+        }
+
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)    // Data received from Software Vieworks
@@ -313,18 +317,26 @@ namespace Pimax_Simulator
 
                 case "VIT\r":
                     kvs = Convert.ToInt32(dataIN.Substring(1, 3));
-                    textBoxKv.Text = kvs.ToString();
+                    // textBoxKv.Text = kvs.ToString();
                     mas = Convert.ToInt32(dataIN.Substring(5, 4)) / 10;
-                    textBoxmA.Text = mas.ToString() + "\r";
+                    // textBoxmA.Text = mas.ToString() + "\r";
                     mss = Convert.ToInt32(dataIN.Substring(10, 5)) / 10;
-                    textBoxms.Text = mss.ToString() + "\r";
+                    // textBoxms.Text = mss.ToString() + "\r";
                     mxs = (float)(mas * mss) / 1000;
                     textBoxmAs.Text = mxs.ToString() + "\r";
 
-                    if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
-                    serialPort1.WriteLine(dataOUT + "\r");
-                    serialPort2.WriteLine(dataOUT + "\r");  
+                    dataOUT = "KV" + kvs.ToString(); 
+                    serialPort2.WriteLine(dataOUT);
+                    Thread.Sleep(200);
+                    dataOUT = "MA" + mas.ToString();
+                    serialPort2.WriteLine(dataOUT);
+                    Thread.Sleep(200);
+                    dataOUT = "MS" + mss.ToString();
+                    serialPort2.WriteLine(dataOUT);
 
+                    // if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
+                    // serialPort1.WriteLine(dataOUT + "\r");
+                    Thread.Sleep(200);
                     dataOUT = "MAS" + mas.ToString();
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MSS" + mss.ToString();
@@ -748,6 +760,11 @@ namespace Pimax_Simulator
                     }
                     break;
                 case "RD: ":
+                    if (buttonPW.BackColor == Color.LightSkyBlue)
+                    {
+                        buttonPW_Click(sender, e);
+                    }
+
                     if (msg == "0\r")
                     {
                      //   buttonSPot1.BackColor = Color.LightYellow;
@@ -780,7 +797,7 @@ namespace Pimax_Simulator
                 case "POK:":
                     if (msg == "0\r")
                     {
-                        if(buttonPW.BackColor == Color.Blue) buttonPREP.BackColor = Color.LightSkyBlue;
+                        if(buttonPW.BackColor == Color.LightGreen) buttonPREP.BackColor = Color.LightSkyBlue;
                         buttonRX.BackColor = Color.LightGray;
                         textBoxKv.BackColor = Color.White;
                         textBoxmA.BackColor = Color.White;
@@ -854,8 +871,8 @@ namespace Pimax_Simulator
             }
             if ((textBox1.Text == "IDLE\r") || (textBox1.Text == "ERROR\r") || (textBox1.Text == "RAD\r")) //
             {
-                buttonPW.BackColor = Color.Blue;
-                buttonPW.ForeColor = Color.Yellow;
+                buttonPW.BackColor = Color.LightGreen;
+                // buttonPW.ForeColor = Color.Yellow;
             }
 
             if ((textBoxmA.Text != "") && (textBoxms.Text != ""))
