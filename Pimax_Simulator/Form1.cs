@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
+using System.Diagnostics;
 
 namespace Pimax_Simulator
 {
@@ -22,13 +23,17 @@ namespace Pimax_Simulator
         readonly string[] ms_Table = new string[30] { "2\r", "5\r", "8\r", "10\r", "20\r", "30\r", "40\r", "50\r", "60\r", "80\r", "100\r", "120\r", "150\r", "200\r", "250\r", "300\r", "400\r", "500\r", "600\r", "800\r", "1000\r", "1200\r", "1500\r", "2000\r", "2500\r", "3000\r", "3500\r", "4000\r", "4500\r", "5000\r" };
         Boolean ACK = false;
         Boolean NACK = false;
-        int kvs, mas, mss;
+        Boolean AutoON = true;
+        Boolean AppExit = false;
+        int kvs, mas, mss, Counter;
         float mxs;
 
         StringBuilder sb = new StringBuilder();
         StringBuilder sb2 = new StringBuilder();
         char LF = (char)10;
         char CR = (char)13;
+
+        System.Windows.Forms.Timer t = null;
 
         public Form1()
         {
@@ -40,11 +45,6 @@ namespace Pimax_Simulator
 
         private void buttonPREP_Click(object sender, EventArgs e)
         {
-         //   dataOUT = "RIN1880";
-         //   serialPort1.WriteLine(dataOUT + "\r");
-         //   Thread.Sleep(300);
-         //   dataOUT = "PRI";
-         //   serialPort1.WriteLine(dataOUT + "\r");
             if (serialPort2.IsOpen)
             {
                 if (buttonPREP.BackColor == Color.LightSkyBlue)
@@ -99,6 +99,62 @@ namespace Pimax_Simulator
             buttonRX.Refresh();
             dataOUT = "PRO";
             serialPort1.WriteLine(dataOUT + "\r");
+        }
+
+        private void StartTimer()
+        {
+            t = new System.Windows.Forms.Timer();
+            t.Interval = 2000;
+            t.Tick += new EventHandler(t_Tick);
+            t.Enabled = true;
+        }
+
+        void t_Tick(object sender, EventArgs e)
+        {
+            Counter += 1;
+            if (Counter == 10)
+            {
+                buttonHRST_Click(sender, e);
+            }
+            if (Counter == 10)
+            {
+                if (AppExit)
+                {
+                    t.Enabled = false;
+                    Application.Exit();
+                }
+                    
+                Counter = 0;
+            }
+            dataOUT = "HS";
+            serialPort2.WriteLine(dataOUT);
+            if (WaitForACK())
+            {
+                buttonPW.BackColor = Color.LightGreen;
+                ACK = false;
+            }
+            else
+            {
+                buttonPW.BackColor = Color.Red;
+                ACK = false;
+            }
+        }
+
+        Boolean WaitForACK()
+        {
+            int start_time, elapsed_time;
+            start_time = DateTime.Now.Second;
+            while (!ACK && !NACK)
+            {
+                elapsed_time = DateTime.Now.Second - start_time;
+                if ((elapsed_time >= 2) || (elapsed_time < 0))
+                {
+                    NACK = true;
+                    // textBoxER.Text = "Timeout en Comunicacion";
+                    return false;
+                }
+            }
+            if (ACK) return true; else return false;
         }
 
 
@@ -160,7 +216,8 @@ namespace Pimax_Simulator
             serialPort2.DtrEnable = false;
             Thread.Sleep(50);
             serialPort2.DtrEnable = true;
-            Thread.Sleep(100);
+            Thread.Sleep(800);
+            StartTimer();
         }
 
         private void buttonPW_Click(object sender, EventArgs e)
@@ -176,11 +233,13 @@ namespace Pimax_Simulator
                     this.Top = 1016;
                     this.ControlBox = false;
                     this.Text = "";
+                    AutoON = true;
                 }
                 else
                 {
                     dataOUT = "PW0";
                     serialPort2.WriteLine(dataOUT);
+                    AutoON = false;
                 }
             }
 
@@ -224,7 +283,8 @@ namespace Pimax_Simulator
 
         private void buttonExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            AppExit = true;
+            // Application.Exit();
         }
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)    // Data received from Software Vieworks
@@ -280,6 +340,7 @@ namespace Pimax_Simulator
             if (dataIN2.Length > 4) message = dataIN2.Remove(4); else message = "";
             if (dataIN2.Contains("ACK")) ACK = true;
             if (dataIN2.Contains("NACK")) NACK = true;
+            Counter = 0;
             try
             {
                 this.Invoke(new EventHandler(ShowData2));
@@ -294,8 +355,6 @@ namespace Pimax_Simulator
         {
             string msg = dataIN;
             int mA, ms;
-            ACK = false;
-            NACK = false;
 
             if (dataIN.Substring(0, 1) == "V") msg = "VIT\r";
 
@@ -538,8 +597,8 @@ namespace Pimax_Simulator
             DoubleBuffered = true;
             string msg;
             if (dataIN2.Length > 4) msg = dataIN2.Remove(0, 4); else msg = "";
-            ACK = false;
-            NACK = false;
+            // ACK = false;
+            // NACK = false;
             switch (message)
             {
                 case "ER: ":
@@ -760,7 +819,7 @@ namespace Pimax_Simulator
                     }
                     break;
                 case "RD: ":
-                    if (buttonPW.BackColor == Color.LightSkyBlue)
+                    if ((buttonPW.BackColor == Color.LightSkyBlue) && AutoON)
                     {
                         buttonPW_Click(sender, e);
                     }
@@ -864,15 +923,14 @@ namespace Pimax_Simulator
                     break;
             }
 
-            if ((textBox1.Text == "OFF\r")) // || (textBox1.Text == "ERROR\r") || (textBox1.Text == "\r")
+            if ((textBox1.Text == "OFF\r") || (textBox1.Text == "ERROR\r") || (textBox1.Text == "\r"))
             {
                 buttonPW.BackColor = Color.LightSkyBlue;
-                buttonPW.ForeColor = Color.DarkSlateGray;
             }
-            if ((textBox1.Text == "IDLE\r") || (textBox1.Text == "ERROR\r") || (textBox1.Text == "RAD\r")) //
+
+            if ((textBox1.Text == "IDLE\r")) // || (textBox1.Text == "ERROR\r") || (textBox1.Text == "\r")
             {
                 buttonPW.BackColor = Color.LightGreen;
-                // buttonPW.ForeColor = Color.Yellow;
             }
 
             if ((textBoxmA.Text != "") && (textBoxms.Text != ""))
@@ -885,6 +943,11 @@ namespace Pimax_Simulator
                 {
                     // MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            if (AppExit)
+            {
+                t.Enabled = false;
+                Application.Exit();
             }
         }
     }
