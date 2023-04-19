@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 using System.Diagnostics;
+using System.Xml;
 
 namespace Pimax_Simulator
 {
@@ -19,6 +20,7 @@ namespace Pimax_Simulator
     {
         public static string dataOUT;
         string dataIN = "", dataIN2 = "", message = "";
+        string Serial1PortName, Serial1BaudRate, Serial1DataBits, Serial1StopBits, Serial1Parity, Serial2PortName, Serial2BaudRate, Serial2DataBits, Serial2StopBits, Serial2Parity;
         readonly string[] mA_Table = new string[8] { "50\r", "100\r", "200\r", "300\r", "400\r", "500\r", "600\r", "700\r" };
         readonly string[] ms_Table = new string[30] { "2\r", "5\r", "8\r", "10\r", "20\r", "30\r", "40\r", "50\r", "60\r", "80\r", "100\r", "120\r", "150\r", "200\r", "250\r", "300\r", "400\r", "500\r", "600\r", "800\r", "1000\r", "1200\r", "1500\r", "2000\r", "2500\r", "3000\r", "3500\r", "4000\r", "4500\r", "5000\r" };
         Boolean ACK = false;
@@ -38,6 +40,42 @@ namespace Pimax_Simulator
         public Form1()
         {
             InitializeComponent();
+            // Create an isntance of XmlTextReader and call Read method to read the file  
+            XmlTextReader configReader = new XmlTextReader("C:\\TechDX\\ConfigIF.xml");
+
+            try
+            {
+                configReader.Read();
+            }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+            
+            // If the node has value  
+            while (configReader.Read())
+            {
+                if (configReader.NodeType == XmlNodeType.Element && configReader.Name == "SerialPort1")
+                {
+                    string s1 = configReader.ReadElementContentAsString();
+                    Serial1PortName = getBetween(s1, "name=", 4);
+                    Serial1BaudRate = getBetween(s1, "baudrate=", 5);
+                    Serial1DataBits = getBetween(s1, "databits=", 1);
+                    Serial1StopBits = getBetween(s1, "stopbits=", 3);
+                    Serial1Parity = getBetween(s1, "parity=", 4);
+                }
+                if (configReader.NodeType == XmlNodeType.Element && configReader.Name == "SerialPort2")
+                {
+                    string s1 = configReader.ReadElementContentAsString();
+                    Serial2PortName = getBetween(s1, "name=", 4);
+                    Serial2BaudRate = getBetween(s1, "baudrate=", 5);
+                    Serial2DataBits = getBetween(s1, "databits=", 1);
+                    Serial2StopBits = getBetween(s1, "stopbits=", 3);
+                    Serial2Parity = getBetween(s1, "parity=", 4);
+                }
+            }
+
             OpenSerial();
             OpenSerial2();
             this.TopMost = true;
@@ -189,11 +227,11 @@ namespace Pimax_Simulator
 
         public void OpenSerial()     // Serial Port para la comunicacion con el Software Vieworks
         {
-            serialPort1.PortName = "COM9";
-            serialPort1.BaudRate = int.Parse("19200");  // 115200  Valid values are 110, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, or 115200.
-            serialPort1.DataBits = int.Parse("8");
-            serialPort1.StopBits = (StopBits)Enum.Parse(typeof(StopBits), "One");
-            serialPort1.Parity = (Parity)Enum.Parse(typeof(Parity), "None");
+            serialPort1.PortName = Serial1PortName;
+            serialPort1.BaudRate = int.Parse(Serial1BaudRate);  // 115200  Valid values are 110, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, or 115200.
+            serialPort1.DataBits = int.Parse(Serial1DataBits);
+            serialPort1.StopBits = (StopBits)Enum.Parse(typeof(StopBits), Serial1StopBits);
+            serialPort1.Parity = (Parity)Enum.Parse(typeof(Parity), Serial1Parity);
             serialPort1.Encoding = Encoding.GetEncoding("iso-8859-1");
             // Encoding = Encoding.GetEncoding("Windows-1252");
             serialPort1.Open();
@@ -205,11 +243,11 @@ namespace Pimax_Simulator
 
         public void OpenSerial2()     // Serial Port para la comunicacion con el Generador
         {
-            serialPort2.PortName = "COM1";
-            serialPort2.BaudRate = int.Parse("38400");  // 115200  Valid values are 110, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, or 115200.
-            serialPort2.DataBits = int.Parse("8");
-            serialPort2.StopBits = (StopBits)Enum.Parse(typeof(StopBits), "One");
-            serialPort2.Parity = (Parity)Enum.Parse(typeof(Parity), "None");
+            serialPort2.PortName = Serial2PortName;
+            serialPort2.BaudRate = int.Parse(Serial2BaudRate);  // 115200  Valid values are 110, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, or 115200.
+            serialPort2.DataBits = int.Parse(Serial2DataBits);
+            serialPort2.StopBits = (StopBits)Enum.Parse(typeof(StopBits), Serial2StopBits);
+            serialPort2.Parity = (Parity)Enum.Parse(typeof(Parity), Serial2Parity);
             serialPort2.Encoding = Encoding.GetEncoding("iso-8859-1");
             // Encoding = Encoding.GetEncoding("Windows-1252");
             serialPort2.Open();
@@ -949,6 +987,19 @@ namespace Pimax_Simulator
                 t.Enabled = false;
                 Application.Exit();
             }
+        }
+
+        public static string getBetween(string strSource, string strStart, int largo)
+        {
+            if (strSource.Contains(strStart))
+            {
+                int Start, End;
+                Start = strSource.IndexOf(strStart, 0) + strStart.Length;
+                End = Start + largo;
+                return strSource.Substring((Start + 1), End - Start);
+            }
+
+            return "";
         }
     }
 }
