@@ -256,11 +256,11 @@
             // buttonLuzCol
             // 
             this.buttonLuzCol.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonLuzCol.Location = new System.Drawing.Point(69, 5);
+            this.buttonLuzCol.Location = new System.Drawing.Point(200, 5);
             this.buttonLuzCol.Name = "buttonLuzCol";
-            this.buttonLuzCol.Size = new System.Drawing.Size(60, 20);
+            this.buttonLuzCol.Size = new System.Drawing.Size(60, 45);
             this.buttonLuzCol.TabIndex = 105;
-            this.buttonLuzCol.Text = "Colimador";
+            this.buttonLuzCol.Text = "Luz Colimador";
             this.buttonLuzCol.UseVisualStyleBackColor = true;
             this.buttonLuzCol.Click += new System.EventHandler(this.buttonLuzCol_Click);
             // 
@@ -276,9 +276,9 @@
             // 
             // buttonHRST
             // 
-            this.buttonHRST.Location = new System.Drawing.Point(201, 5);
+            this.buttonHRST.Location = new System.Drawing.Point(69, 5);
             this.buttonHRST.Name = "buttonHRST";
-            this.buttonHRST.Size = new System.Drawing.Size(60, 45);
+            this.buttonHRST.Size = new System.Drawing.Size(60, 20);
             this.buttonHRST.TabIndex = 107;
             this.buttonHRST.Text = "Reset";
             this.buttonHRST.UseVisualStyleBackColor = true;
@@ -307,7 +307,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(374, 245);
+            this.ClientSize = new System.Drawing.Size(374, 241);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonHRST);
