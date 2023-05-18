@@ -27,6 +27,7 @@ namespace Pimax_Simulator
         Boolean NACK = false;
         Boolean AutoON = true;
         Boolean AppExit = false;
+        Boolean setPrep = false;
         int kvs, mas, mss, Counter;
         float mxs;
 
@@ -796,6 +797,8 @@ namespace Pimax_Simulator
                 case "CAL:":
                     if (msg == "1\r")
                     {
+                        dataOUT = "DB0";
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
                         // buttonCal.BackColor = Color.Red;
                         // buttonWC.BackColor = Color.LightSkyBlue;
                         // this.Size = new Size(800, 600);
@@ -896,14 +899,21 @@ namespace Pimax_Simulator
                     {
                         if(buttonPW.BackColor == Color.LightGreen) buttonPREP.BackColor = Color.LightSkyBlue;
                         buttonRX.BackColor = Color.LightGray;
-                    //    textBoxKv.BackColor = Color.White;
-                    //    textBoxmA.BackColor = Color.White;
-                    //    textBoxms.BackColor = Color.White;
-                    //    textBoxmAs.BackColor = Color.White;
-                    //    textBoxKv.Refresh();
-                    //    textBoxmA.Refresh();
-                    //    textBoxms.Refresh();
-                    //    textBoxmAs.Refresh();
+                        if (setPrep)
+                        {
+                            dataOUT = "PRO";
+                            serialPort1.WriteLine(dataOUT + "\r");
+                            setPrep = false;
+                        }
+
+                        //    textBoxKv.BackColor = Color.White;
+                        //    textBoxmA.BackColor = Color.White;
+                        //    textBoxms.BackColor = Color.White;
+                        //    textBoxmAs.BackColor = Color.White;
+                        //    textBoxKv.Refresh();
+                        //    textBoxmA.Refresh();
+                        //    textBoxms.Refresh();
+                        //    textBoxmAs.Refresh();
                     }
                     if (msg == "1\r")
                     {
@@ -923,6 +933,7 @@ namespace Pimax_Simulator
                         serialPort1.WriteLine(dataOUT + "\r");
                         buttonRX.BackColor = Color.Blue;
                         buttonRX.Refresh();
+                        setPrep = true;
                     }
                     break;
                 case "XOK:":
@@ -937,15 +948,17 @@ namespace Pimax_Simulator
                         dataOUT = "XROI";
                         serialPort1.WriteLine(dataOUT + "\r");
                         buttonRX.BackColor = Color.Yellow;
-                   //     textBoxKv.BackColor = Color.Yellow;
-                   //     textBoxmA.BackColor = Color.Yellow;
-                   //     textBoxms.BackColor = Color.Yellow;
-                   //     textBoxmAs.BackColor = Color.Yellow;
-                   //     buttonRX.Refresh();
-                   //     textBoxKv.Refresh();
-                   //     textBoxmA.Refresh();
-                   //     textBoxms.Refresh();
-                   //     textBoxmAs.Refresh();
+                        dataOUT = "PRO";
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        //     textBoxKv.BackColor = Color.Yellow;
+                        //     textBoxmA.BackColor = Color.Yellow;
+                        //     textBoxms.BackColor = Color.Yellow;
+                        //     textBoxmAs.BackColor = Color.Yellow;
+                        //     buttonRX.Refresh();
+                        //     textBoxKv.Refresh();
+                        //     textBoxmA.Refresh();
+                        //     textBoxms.Refresh();
+                        //     textBoxmAs.Refresh();
                     }
                     break;
                 case "EEP:":
