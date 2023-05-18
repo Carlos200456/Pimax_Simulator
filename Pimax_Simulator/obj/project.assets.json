@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\crequejo.PIM\\Source\\Repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+      "projectUniqueName": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
       "projectName": "Pimax_Simulator",
-      "projectPath": "C:\\Users\\crequejo.PIM\\Source\\Repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+      "projectPath": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
       "packagesPath": "C:\\Users\\crequejo.PIM\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\crequejo.PIM\\Source\\Repos\\Pimax_Simulator\\Pimax_Simulator\\obj\\",
+      "outputPath": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\crequejo.PIM\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -46,7 +46,7 @@
     "frameworks": {
       "net48": {
         "targetAlias": "net48",
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {

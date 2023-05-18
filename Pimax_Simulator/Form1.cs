@@ -896,14 +896,14 @@ namespace Pimax_Simulator
                     {
                         if(buttonPW.BackColor == Color.LightGreen) buttonPREP.BackColor = Color.LightSkyBlue;
                         buttonRX.BackColor = Color.LightGray;
-                        textBoxKv.BackColor = Color.White;
-                        textBoxmA.BackColor = Color.White;
-                        textBoxms.BackColor = Color.White;
-                        textBoxmAs.BackColor = Color.White;
-                        textBoxKv.Refresh();
-                        textBoxmA.Refresh();
-                        textBoxms.Refresh();
-                        textBoxmAs.Refresh();
+                    //    textBoxKv.BackColor = Color.White;
+                    //    textBoxmA.BackColor = Color.White;
+                    //    textBoxms.BackColor = Color.White;
+                    //    textBoxmAs.BackColor = Color.White;
+                    //    textBoxKv.Refresh();
+                    //    textBoxmA.Refresh();
+                    //    textBoxms.Refresh();
+                    //    textBoxmAs.Refresh();
                     }
                     if (msg == "1\r")
                     {
@@ -937,15 +937,15 @@ namespace Pimax_Simulator
                         dataOUT = "XROI";
                         serialPort1.WriteLine(dataOUT + "\r");
                         buttonRX.BackColor = Color.Yellow;
-                        textBoxKv.BackColor = Color.Yellow;
-                        textBoxmA.BackColor = Color.Yellow;
-                        textBoxms.BackColor = Color.Yellow;
-                        textBoxmAs.BackColor = Color.Yellow;
-                        buttonRX.Refresh();
-                        textBoxKv.Refresh();
-                        textBoxmA.Refresh();
-                        textBoxms.Refresh();
-                        textBoxmAs.Refresh();
+                   //     textBoxKv.BackColor = Color.Yellow;
+                   //     textBoxmA.BackColor = Color.Yellow;
+                   //     textBoxms.BackColor = Color.Yellow;
+                   //     textBoxmAs.BackColor = Color.Yellow;
+                   //     buttonRX.Refresh();
+                   //     textBoxKv.Refresh();
+                   //     textBoxmA.Refresh();
+                   //     textBoxms.Refresh();
+                   //     textBoxmAs.Refresh();
                     }
                     break;
                 case "EEP:":
