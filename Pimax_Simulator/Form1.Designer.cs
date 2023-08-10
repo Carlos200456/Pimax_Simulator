@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.buttonPREP = new System.Windows.Forms.Button();
-            this.buttonRX = new System.Windows.Forms.Button();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.textBoxms = new System.Windows.Forms.TextBox();
             this.textBoxmA = new System.Windows.Forms.TextBox();
@@ -56,29 +54,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // buttonPREP
-            // 
-            this.buttonPREP.Location = new System.Drawing.Point(266, 4);
-            this.buttonPREP.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonPREP.Name = "buttonPREP";
-            this.buttonPREP.Size = new System.Drawing.Size(103, 70);
-            this.buttonPREP.TabIndex = 0;
-            this.buttonPREP.Text = "PREP";
-            this.buttonPREP.UseVisualStyleBackColor = true;
-            this.buttonPREP.Click += new System.EventHandler(this.buttonPREP_Click);
-            // 
-            // buttonRX
-            // 
-            this.buttonRX.Location = new System.Drawing.Point(266, 78);
-            this.buttonRX.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonRX.Name = "buttonRX";
-            this.buttonRX.Size = new System.Drawing.Size(103, 70);
-            this.buttonRX.TabIndex = 0;
-            this.buttonRX.Text = "Rayos";
-            this.buttonRX.UseVisualStyleBackColor = true;
-            this.buttonRX.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonRXOn_MouseDw);
-            this.buttonRX.MouseUp += new System.Windows.Forms.MouseEventHandler(this.buttonRXOn_MouseUp);
             // 
             // serialPort1
             // 
@@ -307,7 +282,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(374, 241);
+            this.ClientSize = new System.Drawing.Size(375, 242);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonHRST);
@@ -330,8 +305,6 @@
             this.Controls.Add(this.textBoxms);
             this.Controls.Add(this.textBoxmA);
             this.Controls.Add(this.textBoxKv);
-            this.Controls.Add(this.buttonRX);
-            this.Controls.Add(this.buttonPREP);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Pimax IF";
@@ -341,9 +314,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button buttonPREP;
-        private System.Windows.Forms.Button buttonRX;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.TextBox textBoxms;
         private System.Windows.Forms.TextBox textBoxmA;
