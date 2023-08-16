@@ -102,16 +102,6 @@ namespace Pimax_Simulator
             {
                 buttonHRST_Click(sender, e);
             }
-            if (Counter == 10)
-            {
-                if (AppExit)
-                {
-                    t.Enabled = false;
-                    Application.Exit();
-                }
-                    
-                Counter = 0;
-            }
             dataOUT = "HS";
             serialPort2.WriteLine(dataOUT);
             if (WaitForACK())
@@ -263,8 +253,13 @@ namespace Pimax_Simulator
 
         private void buttonExit_Click(object sender, EventArgs e)
         {
-            AppExit = true;
-            // Application.Exit();
+            // Close serial ports
+            serialPort1.BaseStream.Flush();
+            serialPort1.Close();
+            serialPort2.BaseStream.Flush();
+            serialPort2.Close();    
+            // Exit application
+            System.Windows.Forms.Application.Exit();
         }
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)    // Data received from Software Vieworks
