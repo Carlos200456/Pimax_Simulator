@@ -253,13 +253,40 @@ namespace Pimax_Simulator
 
         private void buttonExit_Click(object sender, EventArgs e)
         {
-            // Close serial ports
-            serialPort1.BaseStream.Flush();
-            serialPort1.Close();
-            serialPort2.BaseStream.Flush();
-            serialPort2.Close();    
-            // Exit application
-            System.Windows.Forms.Application.Exit();
+            logger.LogInfo("Salida de la Aplicación por el operador");
+            // Call Form1_FormClosing
+            Form_FormClosing(sender, new FormClosingEventArgs(CloseReason.UserClosing, false));
+            Application.Exit();
+        }
+
+        private void Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (serialPort1.IsOpen || serialPort2.IsOpen)
+            {
+                e.Cancel = true; //cancel the fom closing
+                Thread CloseDown = new Thread(new ThreadStart(CloseSerialOnExit)); //close port in new thread to avoid hang
+                CloseDown.Start(); //close port in new thread to avoid hang
+            }
+        }
+
+        private void CloseSerialOnExit()
+        {
+            try
+            {
+                serialPort1.Close(); //close the serial port
+                serialPort2.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message); //catch any serial port closing error messages
+            }
+            this.Invoke(new EventHandler(NowClose)); //now close back in the main thread
+        }
+
+        private void NowClose(object sender, EventArgs e)
+        {
+            this.Close(); //now close the form
         }
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)    // Data received from Software Vieworks
