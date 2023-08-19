@@ -27,7 +27,6 @@ namespace Pimax_Simulator
         Boolean ACK = false;
         Boolean NACK = false;
         Boolean AutoON = true;
-        Boolean AppExit = false;
         Boolean setPrep = false;
         int kvs, mas, mss, Counter;
         float mxs;
@@ -56,7 +55,6 @@ namespace Pimax_Simulator
             catch(Exception err)
             {
                 MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
             }
             
             // If the node has value  
@@ -977,11 +975,6 @@ namespace Pimax_Simulator
                 {
                     // MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            if (AppExit)
-            {
-                t.Enabled = false;
-                Application.Exit();
             }
         }
 
