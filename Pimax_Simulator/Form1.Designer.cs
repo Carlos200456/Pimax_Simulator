@@ -53,6 +53,7 @@
             this.buttonHRST = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonExit = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // serialPort1
@@ -277,12 +278,22 @@
             this.buttonExit.UseVisualStyleBackColor = true;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(78, 206);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(82, 13);
+            this.label6.TabIndex = 110;
+            this.label6.Text = "App Version 1.0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(375, 242);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonHRST);
@@ -338,6 +349,7 @@
         private System.Windows.Forms.Button buttonHRST;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button buttonExit;
+        private System.Windows.Forms.Label label6;
     }
 }
 
