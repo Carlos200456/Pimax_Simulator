@@ -20,7 +20,7 @@ namespace Pimax_Simulator
     public partial class Form1 : Form
     {
         public static string dataOUT;
-        string dataIN = "", dataIN2 = "", message = "", textKVP, textKVN, textmAReal, textRmA, LastER;
+        string dataIN = "", dataIN2 = "", message = "", textKVP, textKVN, textmAReal, textRmA, LastER, textSFI, textSRE, textSCC, textSIC, textSUC, textUPW;
         string Serial1PortName, Serial1BaudRate, Serial1DataBits, Serial1StopBits, Serial1Parity, Serial2PortName, Serial2BaudRate, Serial2DataBits, Serial2StopBits, Serial2Parity;
         readonly string[] mA_Table = new string[8] { "50\r", "100\r", "200\r", "300\r", "400\r", "500\r", "600\r", "700\r" };
         readonly string[] ms_Table = new string[30] { "2\r", "5\r", "8\r", "10\r", "20\r", "30\r", "40\r", "50\r", "60\r", "80\r", "100\r", "120\r", "150\r", "200\r", "250\r", "300\r", "400\r", "500\r", "600\r", "800\r", "1000\r", "1200\r", "1500\r", "2000\r", "2500\r", "3000\r", "3500\r", "4000\r", "4500\r", "5000\r" };
@@ -657,6 +657,7 @@ namespace Pimax_Simulator
                             if (buttonFF.Text == "F")
                             {
                                 textBoxER.Text = "Filamento Fino en Corto Circuito";
+                                LoggearError();
                                 buttonFF.BackColor = Color.Red;  // Small Filament CC error
                             }
                             if (buttonFF.Text == "G")
@@ -699,8 +700,20 @@ namespace Pimax_Simulator
 
                         case "FPE1\r":
                             // Fin Prep Board Missing o Relay Pegado
-                            textBoxER.Text = "Falla de Relay Preparacion";
+                            textBoxER.Text = "Verificar Relay Preparacion";
+                            LoggearError();
                             break;
+
+                        case "ESF0\r":
+                            textBoxER.Text = "Falla de Relay Foco Fino";
+                            LoggearError();
+                            break;
+
+                        case "ESF1\r":
+                            textBoxER.Text = "Falla de Relay Foco Grueso";
+                            LoggearError();
+                            break;
+
 
                         default:
                             if (msg != "\r") textBoxER.Text = msg;
@@ -751,11 +764,25 @@ namespace Pimax_Simulator
                     {
                         textmAReal = "???";
                     }
-
                     break;
-
-
-
+                case "SFI:":
+                    textSFI = dataIN.Remove(0, 4);
+                    break;
+                case "SRE:":
+                    textSRE = dataIN.Remove(0, 4);
+                    break;
+                case "SCC:":
+                    textSCC = dataIN.Remove(0, 4);
+                    break;
+                case "SIC:":
+                    textSIC = dataIN.Remove(0, 4);
+                    break;
+                case "SUC:":
+                    textSUC = dataIN.Remove(0, 4);
+                    break;
+                case "UPW:":
+                    textUPW = dataIN.Remove(0, 4);
+                    break;
                 case "TST:":
                     // textBoxTST.Text = dataIN2.Remove(0, 4);
                     break;
@@ -783,23 +810,9 @@ namespace Pimax_Simulator
                     if (msg == "1\r")
                     {
                         dataOUT = "DB0";
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        // buttonCal.BackColor = Color.Red;
-                        // buttonWC.BackColor = Color.LightSkyBlue;
-                        // this.Size = new Size(800, 600);
-                        // this.Left = 700;
-                        // this.Top = 500;
-                    }
-                    else
-                    {
-                        // buttonCal.BackColor = Color.LightSkyBlue;
-                        // buttonWC.BackColor = Color.LightGray;
-                        // this.Size = new Size(800, 335);
-                        // this.Left = 870;
-                        // this.Top = 930;
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator to turn off Calibration
                     }
                     break;
-
                     case "VCC:":
                     textBoxVCC.Text = dataIN2.Remove(0, 4);
                     if (textBoxVCC.Text != "")
@@ -822,9 +835,6 @@ namespace Pimax_Simulator
                             //   MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                    break;
-                case "UPW:":
-                    // textBoxUPW.Text = dataIN.Remove(0, 4);
                     break;
                 case "FT: ":
                     if (msg == "0\r")
@@ -888,15 +898,6 @@ namespace Pimax_Simulator
                             serialPort1.WriteLine(dataOUT + "\r");
                             setPrep = false;
                         }
-
-                        //    textBoxKv.BackColor = Color.White;
-                        //    textBoxmA.BackColor = Color.White;
-                        //    textBoxms.BackColor = Color.White;
-                        //    textBoxmAs.BackColor = Color.White;
-                        //    textBoxKv.Refresh();
-                        //    textBoxmA.Refresh();
-                        //    textBoxms.Refresh();
-                        //    textBoxmAs.Refresh();
                     }
                     if (msg == "1\r")
                     {
@@ -989,6 +990,30 @@ namespace Pimax_Simulator
             }
 
             return "";
+        }
+
+        private void LoggearError()
+        {
+            if (LastER != textBoxER.Text)
+            {
+                try
+                {
+                    logger.LogError(textBoxER.Text);
+                    logger.LogWarning("VCC:" + textBoxVCC.Text.Substring(0, textBoxVCC.Text.Length - 1) +
+                                " ,Sense Ref:" + textSRE.Substring(0, textSRE.Length - 1) +
+                                " ,Sense Fil:" + textSFI.Substring(0, textSFI.Length - 1) +
+                                " ,Sense CC:" + textSCC.Substring(0, textSCC.Length - 1) +
+                                " ,U Cap:" + textSUC.Substring(0, textSUC.Length - 1) +
+                                " ,I Com:" + textSIC.Substring(0, textSIC.Length - 1) +
+                                " ,U Power:" + textUPW.Substring(0, textUPW.Length - 1));
+                    LastER = textBoxER.Text;
+                }
+                catch (Exception err)
+                {
+                    // MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
         }
     }
 
