@@ -189,6 +189,56 @@ namespace Pimax_Simulator
                     serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
+                    if (kvs == 60)
+                    {
+                        // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
+                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_00.img", "F:\\Database\\DemoImage\\Default.img");
+                    }
+                    if (kvs == 61)
+                    {
+                        // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
+                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_01.img", "F:\\Database\\DemoImage\\Default.img");
+                    }
+                    if (kvs == 62)
+                    {
+                        // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
+                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_02.img", "F:\\Database\\DemoImage\\Default.img");
+                    }
+                    if (kvs == 63)
+                    {
+                        // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
+                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_03.img", "F:\\Database\\DemoImage\\Default.img");
+                    }
+                    if (kvs == 64)
+                    {
+                        // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
+                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_04.img", "F:\\Database\\DemoImage\\Default.img");
+                    }
+                    if (kvs == 65)
+                    {
+                        // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
+                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_05.img", "F:\\Database\\DemoImage\\Default.img");
+                    }
+                    if (kvs == 66)
+                    {
+                        // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
+                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_06.img", "F:\\Database\\DemoImage\\Default.img");
+                    }
+                    if (kvs == 67)
+                    {
+                        // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
+                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_07.img", "F:\\Database\\DemoImage\\Default.img");
+                    }
+                    if (kvs == 68)
+                    {
+                        // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
+                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_08.img", "F:\\Database\\DemoImage\\Default.img");
+                    }
+                    if (kvs == 69)
+                    {
+                        // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
+                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_09.img", "F:\\Database\\DemoImage\\Default.img");
+                    }
                     break;
 
                 case "F?\r":
