@@ -456,5 +456,18 @@ namespace Pimax_Simulator
             System.IO.File.Delete("F:\\Database\\DemoImage\\Default.img");
             System.IO.File.Copy(Image, "F:\\Database\\DemoImage\\Default.img");
         }
+
+        public static string getBetween(string strSource, string strStart, int largo)
+        {
+            if (strSource.Contains(strStart))
+            {
+                int Start, End;
+                Start = strSource.IndexOf(strStart, 0) + strStart.Length;
+                End = Start + largo;
+                return strSource.Substring((Start + 1), End - Start);
+            }
+
+            return "";
+        }
     }
 }
