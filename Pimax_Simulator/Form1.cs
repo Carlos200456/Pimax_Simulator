@@ -470,6 +470,8 @@ namespace Pimax_Simulator
                     dataOUT = "MAS" + textBoxmA.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
+                    // If dataOUT have only one character after the . add a zero
+                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
                     serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -493,6 +495,8 @@ namespace Pimax_Simulator
                     dataOUT = "MAS" + textBoxmA.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
+                    // If dataOUT have only one character after the . add a zero
+                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
                     serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -516,6 +520,8 @@ namespace Pimax_Simulator
                     dataOUT = "MSS" + textBoxms.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
+                    // If dataOUT have only one character after the . add a zero
+                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
                     serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -539,6 +545,8 @@ namespace Pimax_Simulator
                     dataOUT = "MSS" + textBoxms.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
+                    // If dataOUT have only one character after the . add a zero
+                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
                     serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
