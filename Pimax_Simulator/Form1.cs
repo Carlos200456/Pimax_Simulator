@@ -33,7 +33,7 @@ namespace Pimax_Simulator
         {
             InitializeComponent();
             // Create an isntance of XmlTextReader and call Read method to read the file  
-            XmlTextReader configReader = new XmlTextReader("C:\\TechDX\\ConfigIF_Demo.xml");
+            XmlTextReader configReader = new XmlTextReader("C:\\TechDX\\Images_Demo\\ConfigIF_Demo.xml");
 
             try
             {
