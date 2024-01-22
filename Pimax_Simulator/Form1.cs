@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Xml;
 
 namespace Pimax_Simulator
 {
@@ -31,6 +32,32 @@ namespace Pimax_Simulator
         public Form1()
         {
             InitializeComponent();
+            // Create an isntance of XmlTextReader and call Read method to read the file  
+            XmlTextReader configReader = new XmlTextReader("C:\\TechDX\\ConfigIF_Demo.xml");
+
+            try
+            {
+                configReader.Read();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            // If the node has value  
+            while (configReader.Read())
+            {
+                if (configReader.NodeType == XmlNodeType.Element && configReader.Name == "SerialPort1")
+                {
+                    string s1 = configReader.ReadElementContentAsString();
+                    serialPort1.PortName = getBetween(s1, "name=", 4);
+                    serialPort1.BaudRate = getBetween(s1, "baudrate=", 5);
+                    serialPort1.DataBits = getBetween(s1, "databits=", 1);
+                    serialPort1.StopBits = getBetween(s1, "stopbits=", 3);
+                    serialPort1.Parity = getBetween(s1, "parity=", 4);
+                }
+            }
+
             OpenSerial();
             kvs = 60;
             mas = 200;
@@ -84,11 +111,11 @@ namespace Pimax_Simulator
 
         public void OpenSerial()
         {
-            serialPort1.PortName = "COM1";
-            serialPort1.BaudRate = int.Parse("19200");  // 115200  Valid values are 110, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, or 115200.
-            serialPort1.DataBits = int.Parse("8");
-            serialPort1.StopBits = (StopBits)Enum.Parse(typeof(StopBits), "One");
-            serialPort1.Parity = (Parity)Enum.Parse(typeof(Parity), "None");
+            //   serialPort1.PortName = "COM1";
+            //   serialPort1.BaudRate = int.Parse("19200");  // 115200  Valid values are 110, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, or 115200.
+            //   serialPort1.DataBits = int.Parse("8");
+            //   serialPort1.StopBits = (StopBits)Enum.Parse(typeof(StopBits), "One");
+            //   serialPort1.Parity = (Parity)Enum.Parse(typeof(Parity), "None");
             serialPort1.Encoding = Encoding.GetEncoding("iso-8859-1");
             // Encoding = Encoding.GetEncoding("Windows-1252");
             serialPort1.Open();
