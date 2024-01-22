@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace Pimax_Simulator
 {
@@ -33,12 +34,12 @@ namespace Pimax_Simulator
             OpenSerial();
             kvs = 60;
             mas = 200;
-            mss = 100;
-            textBoxKv.Text = kvs.ToString();
-            textBoxmA.Text = mas.ToString();
-            textBoxms.Text = mss.ToString();
+            mss = 30;
+            textBoxKv.Text = kvs.ToString() + "\r";
+            textBoxmA.Text = mas.ToString() + "\r";
+            textBoxms.Text = mss.ToString() + "\r";
             mxs = (float)(mas * mss) / 1000;
-            textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture) + "\r";
             this.TopMost = true;
             // Thread.CurrentCulture.NumberFormat.NumberDecimalSeparator = ".";
         }
@@ -83,7 +84,7 @@ namespace Pimax_Simulator
 
         public void OpenSerial()
         {
-            serialPort1.PortName = "COM7";
+            serialPort1.PortName = "COM1";
             serialPort1.BaudRate = int.Parse("19200");  // 115200  Valid values are 110, 300, 1200, 2400, 4800, 9600, 19200, 38400, 57600, or 115200.
             serialPort1.DataBits = int.Parse("8");
             serialPort1.StopBits = (StopBits)Enum.Parse(typeof(StopBits), "One");
@@ -158,13 +159,17 @@ namespace Pimax_Simulator
                 case "PI\r":
                     if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
                     serialPort1.WriteLine(dataOUT + "\r");
+                    Thread.Sleep(100);
                     dataOUT = "MAS" + mas.ToString();
                     serialPort1.WriteLine(dataOUT + "\r");
+                    Thread.Sleep(100);
                     dataOUT = "MSS" + mss.ToString();
                     serialPort1.WriteLine(dataOUT + "\r");
+                    Thread.Sleep(100);
                     mxs = (float)(mas * mss) / 1000;
                     dataOUT = "MXS" + mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
                     serialPort1.WriteLine(dataOUT + "\r");
+                    Thread.Sleep(100);
                     dataOUT = "PI";
                     serialPort1.WriteLine(dataOUT + "\r");
                     break;
@@ -192,52 +197,52 @@ namespace Pimax_Simulator
                     if (kvs == 60)
                     {
                         // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
-                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_00.img", "F:\\Database\\DemoImage\\Default.img");
+                        CopyImage("C:\\TechDX\\Images_Demo\\Demo_Image_00.img");
                     }
                     if (kvs == 61)
                     {
                         // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
-                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_01.img", "F:\\Database\\DemoImage\\Default.img");
+                        CopyImage("C:\\TechDX\\Images_Demo\\Demo_Image_01.img");
                     }
                     if (kvs == 62)
                     {
                         // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
-                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_02.img", "F:\\Database\\DemoImage\\Default.img");
+                        CopyImage("C:\\TechDX\\Images_Demo\\Demo_Image_02.img");
                     }
                     if (kvs == 63)
                     {
                         // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
-                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_03.img", "F:\\Database\\DemoImage\\Default.img");
+                        CopyImage("C:\\TechDX\\Images_Demo\\Demo_Image_03.img");
                     }
                     if (kvs == 64)
                     {
                         // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
-                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_04.img", "F:\\Database\\DemoImage\\Default.img");
+                        CopyImage("C:\\TechDX\\Images_Demo\\Demo_Image_04.img");
                     }
                     if (kvs == 65)
                     {
                         // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
-                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_05.img", "F:\\Database\\DemoImage\\Default.img");
+                        CopyImage("C:\\TechDX\\Images_Demo\\Demo_Image_05.img");
                     }
                     if (kvs == 66)
                     {
                         // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
-                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_06.img", "F:\\Database\\DemoImage\\Default.img");
+                        CopyImage("C:\\TechDX\\Images_Demo\\Demo_Image_06.img");
                     }
                     if (kvs == 67)
                     {
                         // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
-                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_07.img", "F:\\Database\\DemoImage\\Default.img");
+                        CopyImage("C:\\TechDX\\Images_Demo\\Demo_Image_07.img");
                     }
                     if (kvs == 68)
                     {
                         // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
-                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_08.img", "F:\\Database\\DemoImage\\Default.img");
+                        CopyImage("C:\\TechDX\\Images_Demo\\Demo_Image_08.img");
                     }
                     if (kvs == 69)
                     {
                         // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
-                        System.IO.File.Copy("C:\\TechDX\\Images_Demo\\Demo_Image_09.img", "F:\\Database\\DemoImage\\Default.img");
+                        CopyImage("C:\\TechDX\\Images_Demo\\Demo_Image_09.img");
                     }
                     break;
 
@@ -299,6 +304,8 @@ namespace Pimax_Simulator
                     dataOUT = "MAS" + textBoxmA.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
+                    // If dataOUT have only one character after the . add a zero
+                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
                     serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -320,6 +327,8 @@ namespace Pimax_Simulator
                     dataOUT = "MAS" + textBoxmA.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
+                    // If dataOUT have only one character after the . add a zero
+                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
                     serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -341,6 +350,8 @@ namespace Pimax_Simulator
                     dataOUT = "MSS" + textBoxms.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
+                    // If dataOUT have only one character after the . add a zero
+                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
                     serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -362,6 +373,8 @@ namespace Pimax_Simulator
                     dataOUT = "MSS" + textBoxms.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
+                    // If dataOUT have only one character after the . add a zero
+                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
                     serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -408,6 +421,13 @@ namespace Pimax_Simulator
                 buttonFG.BackColor = Color.Green;
                 buttonFF.Text = "G";
             }
+        }
+
+        void CopyImage(string Image)
+        {
+            // Copy file in C:\TechDX\Images_Demo to F:\Database\DemoImage
+            System.IO.File.Delete("F:\\Database\\DemoImage\\Default.img");
+            System.IO.File.Copy(Image, "F:\\Database\\DemoImage\\Default.img");
         }
     }
 }
