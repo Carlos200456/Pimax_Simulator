@@ -51,10 +51,10 @@ namespace Pimax_Simulator
                 {
                     string s1 = configReader.ReadElementContentAsString();
                     serialPort1.PortName = getBetween(s1, "name=", 4);
-                    serialPort1.BaudRate = getBetween(s1, "baudrate=", 5);
-                    serialPort1.DataBits = getBetween(s1, "databits=", 1);
-                    serialPort1.StopBits = getBetween(s1, "stopbits=", 3);
-                    serialPort1.Parity = getBetween(s1, "parity=", 4);
+                    serialPort1.BaudRate = int.Parse(getBetween(s1, "baudrate=", 5));
+                    serialPort1.DataBits = int.Parse(getBetween(s1, "databits=", 1));
+                    serialPort1.StopBits = (StopBits)Enum.Parse(typeof(StopBits), getBetween(s1, "stopbits=", 3));
+                    serialPort1.Parity = (Parity)Enum.Parse(typeof(Parity), getBetween(s1, "parity=", 4));
                 }
             }
 
