@@ -19,7 +19,7 @@ namespace Pimax_Simulator
 {
     public partial class Form1 : Form
     {
-        public static string dataOUT;
+        public static string dataOUT, path;
         string dataIN = "", dataIN2 = "", message = "", textKVP, textKVN, textmAReal, textRmA, LastER, textSFI, textSRE, textSCC, textSIC, textSUC, textUPW;
         string Serial1PortName, Serial1BaudRate, Serial1DataBits, Serial1StopBits, Serial1Parity, Serial2PortName, Serial2BaudRate, Serial2DataBits, Serial2StopBits, Serial2Parity;
         readonly string[] mA_Table = new string[8] { "50\r", "100\r", "200\r", "300\r", "400\r", "500\r", "600\r", "700\r" };
@@ -43,6 +43,8 @@ namespace Pimax_Simulator
         public Form1()
         {
             InitializeComponent();
+            path = AppDomain.CurrentDomain.BaseDirectory;
+            SetImage(path + "About.png");
             // Create an isntance of XmlTextReader and call Read method to read the file  
             XmlTextReader configReader = new XmlTextReader("C:\\TechDX\\ConfigIF.xml");
             
@@ -83,6 +85,22 @@ namespace Pimax_Simulator
             OpenSerial();
             OpenSerial2();
             this.TopMost = true;
+        }
+
+        // Rutina para colocar una imagen en el form
+        private void SetImage(string path)
+        {
+            try
+            {
+                Image img = Image.FromFile(path);
+                this.BackgroundImage = img;
+                this.BackgroundImageLayout = ImageLayout.Stretch;
+
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void StartTimer()
@@ -206,13 +224,12 @@ namespace Pimax_Simulator
                 }
                 else
                 {
-                    dataOUT = "PW0";
-                    serialPort2.WriteLine(dataOUT);
-                    logger.LogInfo("Turn Off by Operator");
-                    AutoON = false;
+                    // dataOUT = "PW0";
+                    // serialPort2.WriteLine(dataOUT);
+                    // logger.LogInfo("Turn Off by Operator");
+                    // AutoON = false;
                 }
             }
-
         }
 
         private void buttonHRST_Click(object sender, EventArgs e)
