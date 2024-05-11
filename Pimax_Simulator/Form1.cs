@@ -14,6 +14,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
+using System.Media;
 
 namespace Pimax_Simulator
 {
@@ -85,6 +86,13 @@ namespace Pimax_Simulator
             OpenSerial();
             OpenSerial2();
             this.TopMost = true;
+            // System.Media.SystemSounds.Beep.Play();  // Error Sound
+            // Thread.Sleep(1000);
+            for (int i = 0; i < 10; i++)
+            {
+                GUI_Sound(i);
+                Thread.Sleep(1000);
+            }
         }
 
         // Rutina para colocar una imagen en el form
@@ -1038,6 +1046,23 @@ namespace Pimax_Simulator
                     // MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+            }
+        }
+
+        public void GUI_Sound(int sound)
+        {
+            // Replace with the path to your sound file
+            string soundFilePath = path + "Sounds\\" + "XRay_" + sound.ToString() + ".wav";
+            try
+            {
+                using (var player = new SoundPlayer(soundFilePath))
+                {
+                    player.Play();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error playing sound: {ex.Message}");
             }
         }
     }
