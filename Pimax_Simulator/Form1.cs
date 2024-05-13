@@ -280,7 +280,7 @@ namespace Pimax_Simulator
             {
                 if (buttonLuzCol.BackColor == Color.LightGray) dataOUT = "CL1"; else dataOUT = "CL0";
                 serialPort2.WriteLine(dataOUT);
-                GUI_Sound(1);
+                GUI_Sound(7);
             }
 
         }
@@ -649,7 +649,7 @@ namespace Pimax_Simulator
                     if (msg != "\r")
                     {
                         textBoxER.Text = "";
-
+                        GUI_Sound(6);
                     }
                     switch (msg)
                     {
@@ -972,7 +972,7 @@ namespace Pimax_Simulator
                         serialPort1.WriteLine(dataOUT + "\r");
                         dataOUT = "PRO";
                         serialPort1.WriteLine(dataOUT + "\r");
-                        GUI_Sound(5);
+                        GUI_Sound(4);
                     }
                     break;
                 case "EEP:":
