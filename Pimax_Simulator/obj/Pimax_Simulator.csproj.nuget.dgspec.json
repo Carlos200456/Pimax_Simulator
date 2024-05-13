@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\carlo\\source\\repos\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {}
+    "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\carlo\\source\\repos\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {
+    "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\carlo\\source\\repos\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+        "projectUniqueName": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
         "projectName": "Pimax_Simulator",
-        "projectPath": "C:\\Users\\carlo\\source\\repos\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
-        "packagesPath": "C:\\Users\\carlo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\carlo\\source\\repos\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\obj\\",
+        "projectPath": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+        "packagesPath": "C:\\Users\\crequejo.PIM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\carlo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\crequejo.PIM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,7 +39,7 @@
       "frameworks": {
         "net48": {
           "targetAlias": "net48",
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

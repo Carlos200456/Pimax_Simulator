@@ -41,6 +41,9 @@ namespace Pimax_Simulator
 
         Logger logger = new Logger("C:\\TechDX\\LogIFDUE.txt");    // Ruta del archivo de log
 
+        // Class-level field
+        private SoundPlayer[] soundPlayers;
+
         public Form1()
         {
             InitializeComponent();
@@ -86,13 +89,20 @@ namespace Pimax_Simulator
             OpenSerial();
             OpenSerial2();
             this.TopMost = true;
-            // System.Media.SystemSounds.Beep.Play();  // Error Sound
-            // Thread.Sleep(1000);
-            for (int i = 0; i < 10; i++)
+            // Load your sound files into the array
+            soundPlayers = new SoundPlayer[]
             {
-                GUI_Sound(i);
-                Thread.Sleep(1000);
-            }
+                new SoundPlayer(path + "Sounds\\XRay_0.wav"),
+                new SoundPlayer(path + "Sounds\\XRay_1.wav"),
+                new SoundPlayer(path + "Sounds\\XRay_2.wav"),
+                new SoundPlayer(path + "Sounds\\XRay_3.wav"),
+                new SoundPlayer(path + "Sounds\\XRay_4.wav"),
+                new SoundPlayer(path + "Sounds\\XRay_5.wav"),
+                new SoundPlayer(path + "Sounds\\XRay_6.wav"),
+                new SoundPlayer(path + "Sounds\\XRay_7.wav"),
+                new SoundPlayer(path + "Sounds\\XRay_8.wav"),
+            //    new SoundPlayer(path + "Sounds\\XRay_9.wav"),
+            };
         }
 
         // Rutina para colocar una imagen en el form
@@ -270,6 +280,7 @@ namespace Pimax_Simulator
             {
                 if (buttonLuzCol.BackColor == Color.LightGray) dataOUT = "CL1"; else dataOUT = "CL0";
                 serialPort2.WriteLine(dataOUT);
+                GUI_Sound(1);
             }
 
         }
@@ -961,6 +972,7 @@ namespace Pimax_Simulator
                         serialPort1.WriteLine(dataOUT + "\r");
                         dataOUT = "PRO";
                         serialPort1.WriteLine(dataOUT + "\r");
+                        GUI_Sound(5);
                     }
                     break;
                 case "EEP:":
@@ -1049,20 +1061,19 @@ namespace Pimax_Simulator
             }
         }
 
-        public void GUI_Sound(int sound)
+        public void GUI_Sound(int soundIndex)
         {
-            // Replace with the path to your sound file
-            string soundFilePath = path + "Sounds\\" + "XRay_" + sound.ToString() + ".wav";
-            try
+            if (soundIndex >= 0 && soundIndex < soundPlayers.Length)
             {
-                using (var player = new SoundPlayer(soundFilePath))
+                try
                 {
-                    player.Play();
+                    soundPlayers[soundIndex].Play();
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error playing sound: {ex.Message}");
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error playing sound: {ex.Message}");
+                }
+
             }
         }
     }
