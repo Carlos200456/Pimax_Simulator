@@ -374,8 +374,16 @@ namespace Pimax_Simulator
         { 
             dataIN2 = serialPort2.ReadLine();
             if (dataIN2.Length > 4) message = dataIN2.Remove(4); else message = "";
-            if (dataIN2.Contains("ACK")) ACK = true;
-            if (dataIN2.Contains("NACK")) NACK = true;
+            if (dataIN2.Contains("ACK"))
+            {
+                ACK = true;
+                GUI_Sound(1);
+            }
+            if (dataIN2.Contains("NACK"))
+            {
+                NACK = true;
+                GUI_Sound(0);
+            }
             Counter = 0;
             try
             {
@@ -1073,7 +1081,6 @@ namespace Pimax_Simulator
                 {
                     Console.WriteLine($"Error playing sound: {ex.Message}");
                 }
-
             }
         }
     }
