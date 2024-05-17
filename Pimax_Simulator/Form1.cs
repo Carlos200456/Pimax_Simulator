@@ -103,6 +103,7 @@ namespace Pimax_Simulator
                 new SoundPlayer(path + "Sounds\\XRay_8.wav"),
             //    new SoundPlayer(path + "Sounds\\XRay_9.wav"),
             };
+            // GUI_Sound(4);
         }
 
         // Rutina para colocar una imagen en el form
@@ -175,20 +176,20 @@ namespace Pimax_Simulator
 
         private void button1_Click(object sender, EventArgs e)
         {
-            dataOUT = "ER05";
-            serialPort1.WriteLine(dataOUT + "\r");
+            // dataOUT = "ER05";
+            // serialPort1.WriteLine(dataOUT + "\r");
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            dataOUT = "ER03";
-            serialPort1.WriteLine(dataOUT + "\r");
+            // dataOUT = "ER03";
+            // serialPort1.WriteLine(dataOUT + "\r");
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            dataOUT = "ER04";
-            serialPort1.WriteLine(dataOUT + "\r");
+            // dataOUT = "ER04";
+            // serialPort1.WriteLine(dataOUT + "\r");
         }
 
         public void OpenSerial()     // Serial Port para la comunicacion con el Software Vieworks
@@ -377,7 +378,7 @@ namespace Pimax_Simulator
             if (dataIN2.Contains("ACK"))
             {
                 ACK = true;
-                GUI_Sound(1);
+                // GUI_Sound(1);
             }
             if (dataIN2.Contains("NACK"))
             {
@@ -485,6 +486,7 @@ namespace Pimax_Simulator
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "KV" + kvs.ToString();
                     serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                    GUI_Sound(1);
                     break;
 
                 case "KV-\r":
@@ -494,6 +496,7 @@ namespace Pimax_Simulator
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "KV" + kvs.ToString();
                     serialPort2.WriteLine(dataOUT);    // Send data to Generator
+                    GUI_Sound(1);
                     break;
 
                 case "MA+\r":
@@ -510,6 +513,7 @@ namespace Pimax_Simulator
                         mas = Convert.ToInt32(textBoxmA.Text);
                         mxs = (float)(mas * mss) / 1000;
                         textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                        GUI_Sound(1);
                     }
                     dataOUT = "MAS" + textBoxmA.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -535,6 +539,7 @@ namespace Pimax_Simulator
                         mas = Convert.ToInt32(textBoxmA.Text);
                         mxs = (float)(mas * mss) / 1000;
                         textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                        GUI_Sound(1);
                     }
                     dataOUT = "MAS" + textBoxmA.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -560,6 +565,7 @@ namespace Pimax_Simulator
                         mss = Convert.ToInt32(textBoxms.Text);
                         mxs = (float)(mas * mss) / 1000;
                         textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                        GUI_Sound(1);
                     }
                     dataOUT = "MSS" + textBoxms.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -585,6 +591,7 @@ namespace Pimax_Simulator
                         mss = Convert.ToInt32(textBoxms.Text);
                         mxs = (float)(mas * mss) / 1000;
                         textBoxmAs.Text = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                        GUI_Sound(1);
                     }
                     dataOUT = "MSS" + textBoxms.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
@@ -832,9 +839,9 @@ namespace Pimax_Simulator
                 case "SUC:":
                     textSUC = dataIN.Remove(0, 4);
                     break;
-                case "UPW:":
-                    textUPW = dataIN.Remove(0, 4);
-                    break;
+//                case "UPW:":
+//                    textUPW = dataIN.Remove(0, 4);
+//                    break;
                 case "TST:":
                     // textBoxTST.Text = dataIN2.Remove(0, 4);
                     break;
@@ -956,6 +963,7 @@ namespace Pimax_Simulator
                         button1.BackColor = Color.LightGreen;
                         button2.BackColor = Color.LightGreen;
                         button3.BackColor = Color.LightGreen;
+                        // GUI_Sound(2);
                     }
                     if (msg == "2\r")
                     {
@@ -965,6 +973,7 @@ namespace Pimax_Simulator
                         dataOUT = "PRI";
                         serialPort1.WriteLine(dataOUT + "\r");
                         setPrep = true;
+                        GUI_Sound(1);
                     }
                     break;
                 case "XOK:":
@@ -980,7 +989,6 @@ namespace Pimax_Simulator
                         serialPort1.WriteLine(dataOUT + "\r");
                         dataOUT = "PRO";
                         serialPort1.WriteLine(dataOUT + "\r");
-                        GUI_Sound(4);
                     }
                     break;
                 case "EEP:":
@@ -993,6 +1001,7 @@ namespace Pimax_Simulator
                     break;
 
                 case "LOG:":
+                    GUI_Sound(4);
                     logger.LogInfo("VCC:" + textBoxVCC.Text.Substring(0, textBoxVCC.Text.Length - 1) +
                                    " Kv:" + textBoxKv.Text.Substring(0, textBoxKv.Text.Length - 1) +
                                    " mA:" + textBoxmA.Text.Substring(0, textBoxmA.Text.Length - 1) +
