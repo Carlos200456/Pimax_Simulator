@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using System.Media;
+using System.Runtime.InteropServices;
 
 namespace Pimax_Simulator
 {
@@ -43,6 +44,9 @@ namespace Pimax_Simulator
 
         // Class-level field
         private SoundPlayer[] soundPlayers;
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool Beep(uint dwFreq, uint dwDuration);
 
         public Form1()
         {
@@ -103,7 +107,7 @@ namespace Pimax_Simulator
                 new SoundPlayer(path + "Sounds\\XRay_8.wav"),
             //    new SoundPlayer(path + "Sounds\\XRay_9.wav"),
             };
-            // GUI_Sound(4);
+            // Beep(1200, 200);
         }
 
         // Rutina para colocar una imagen en el form
@@ -281,7 +285,7 @@ namespace Pimax_Simulator
             {
                 if (buttonLuzCol.BackColor == Color.LightGray) dataOUT = "CL1"; else dataOUT = "CL0";
                 serialPort2.WriteLine(dataOUT);
-                GUI_Sound(7);
+                GUI_Sound(1);
             }
 
         }
@@ -383,7 +387,7 @@ namespace Pimax_Simulator
             if (dataIN2.Contains("NACK"))
             {
                 NACK = true;
-                GUI_Sound(0);
+                GUI_Sound(6);
             }
             Counter = 0;
             try
@@ -458,7 +462,7 @@ namespace Pimax_Simulator
 
                 case "KV?\r":
                     if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
-                    serialPort1.WriteLine(dataOUT + "\r");
+                    if (buttonPW.BackColor == Color.LightGreen) serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "MA?\r":
@@ -480,32 +484,32 @@ namespace Pimax_Simulator
                     break;
 
                 case "KV+\r":
-                    if (kvs < 125) kvs += 1;
-                    textBoxKv.Text = kvs.ToString();
+                    if (kvs < 125) kvs += 1; else GUI_Sound(6);
+                    // textBoxKv.Text = kvs.ToString();
                     if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "KV" + kvs.ToString();
                     serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                    GUI_Sound(1);
+                    // GUI_Sound(1);
                     break;
 
                 case "KV-\r":
-                    if (kvs > 35) kvs -= 1;
-                    textBoxKv.Text = kvs.ToString();
+                    if (kvs > 35) kvs -= 1; else GUI_Sound(6);
+                    // textBoxKv.Text = kvs.ToString();
                     if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "KV" + kvs.ToString();
                     serialPort2.WriteLine(dataOUT);    // Send data to Generator
-                    GUI_Sound(1);
+                    // GUI_Sound(1);
                     break;
 
                 case "MA+\r":
                     mA = 0;
-                    for (int i = 0; i <= 7; ++i)      //    Limitado a 7 Valores Maximo disponible 8
+                    for (int i = 0; i <= 6; ++i)      //    Limitado a 7 Valores Maximo disponible 8
                     {
                         if (mA_Table[i] == textBoxmA.Text) mA = i + 1;
                     }
-                    if (mA <= 7)                      //    Limitado a 7 Valores Maximo disponible 8
+                    if (mA <= 6)                      //    Limitado a 7 Valores Maximo disponible 8
                     {
                         textBoxmA.Text = mA_Table[mA];
                         dataOUT = "MA" + textBoxmA.Text;
@@ -732,6 +736,8 @@ namespace Pimax_Simulator
                         case "TMP\r":
                             button3.BackColor = Color.Red;        // Temperatura Tubo
                             textBoxER.Text = "Temperatura de Tubo Exedida";
+                            dataOUT = "ER04";
+                            serialPort1.WriteLine(dataOUT + "\r");
                             break;
 
                         case "EEE\r":
@@ -787,10 +793,34 @@ namespace Pimax_Simulator
                     // textBoxSN.Text = dataIN2.Remove(0, 4);
                     break;
                 case "Kv: ":
-                    textBoxKv.Text = dataIN2.Remove(0, 4);
+                    if (textBoxKv.Text != dataIN2.Remove(0, 4))
+                    {
+                        textBoxKv.Text = dataIN2.Remove(0, 4);
+                        GUI_Sound(1);
+                    }
                     kvs = Int32.Parse(textBoxKv.Text);
                     break;
                 case "mA: ":
+                    if (textBoxmA.Text != dataIN2.Remove(0, 4))
+                    {
+                        textBoxmA.Text = dataIN2.Remove(0, 4);
+                        dataOUT = "MAS" + textBoxmA.Text;
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        try
+                        {
+                            textBoxmAs.Text = ((float)Convert.ToInt32(textBoxmA.Text) * Convert.ToInt32(textBoxms.Text) / 1000).ToString();
+                        }
+                        catch (Exception err)
+                        {
+                            // MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        dataOUT = "MXS" + textBoxmAs.Text;
+                        // If dataOUT have only one character after the . add a zero
+                        if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
+                        serialPort1.WriteLine(dataOUT + "\r");
+                    }
                     textBoxmA.Text = dataIN2.Remove(0, 4);
                     mas = Int32.Parse(textBoxmA.Text);
                     break;
@@ -801,6 +831,26 @@ namespace Pimax_Simulator
                     // textBoxSmA.Text = dataIN2.Remove(0, 4);
                     break;
                 case "ms: ":
+                    if (textBoxms.Text != dataIN2.Remove(0, 4))
+                    {
+                        textBoxms.Text = dataIN2.Remove(0, 4);
+                        dataOUT = "MSS" + textBoxms.Text;
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        try
+                        {
+                            textBoxmAs.Text = ((float)Convert.ToInt32(textBoxmA.Text) * Convert.ToInt32(textBoxms.Text) / 1000).ToString();
+                        }
+                        catch (Exception err)
+                        {
+                            // MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        dataOUT = "MXS" + textBoxmAs.Text;
+                        // If dataOUT have only one character after the . add a zero
+                        if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
+                        serialPort1.WriteLine(dataOUT + "\r");
+                    }
                     textBoxms.Text = dataIN2.Remove(0, 4);
                     mss = Int32.Parse(textBoxms.Text);
                     break;
@@ -1001,7 +1051,8 @@ namespace Pimax_Simulator
                     break;
 
                 case "LOG:":
-                    GUI_Sound(4);
+                    // GUI_Sound(4);
+                    Beep(1600, 400);
                     logger.LogInfo("VCC:" + textBoxVCC.Text.Substring(0, textBoxVCC.Text.Length - 1) +
                                    " Kv:" + textBoxKv.Text.Substring(0, textBoxKv.Text.Length - 1) +
                                    " mA:" + textBoxmA.Text.Substring(0, textBoxmA.Text.Length - 1) +
