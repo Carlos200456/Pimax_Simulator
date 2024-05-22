@@ -16,6 +16,7 @@ using System.IO;
 using System.Xml;
 using System.Media;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Pimax_Simulator
 {
@@ -23,6 +24,7 @@ namespace Pimax_Simulator
     {
         public static string dataOUT, path;
         string SW_Version = "3.0\r";        // =======> Version de software para compatibilidad
+        string SerialNumber = "";
         string dataIN = "", dataIN2 = "", message = "", textKVP, textKVN, textmAReal, textRmA, LastER, textSFI, textSRE, textSCC, textSIC, textSUC, textUPW;
         string Serial1PortName, Serial1BaudRate, Serial1DataBits, Serial1StopBits, Serial1Parity, Serial2PortName, Serial2BaudRate, Serial2DataBits, Serial2StopBits, Serial2Parity;
         readonly string[] mA_Table = new string[8] { "50\r", "100\r", "200\r", "300\r", "400\r", "500\r", "600\r", "700\r" };
@@ -34,6 +36,9 @@ namespace Pimax_Simulator
         Boolean SW_Ready = false;
         int kvs, mas, mss, Counter;
         float mxs;
+
+        string fileToCopy = "C:\\TechDX\\LogIFDUE.txt";
+        string destinationDirectory = "G:\\My Drive\\Logs\\";
 
         StringBuilder sb = new StringBuilder();
         StringBuilder sb2 = new StringBuilder();
@@ -184,6 +189,22 @@ namespace Pimax_Simulator
         {
             // dataOUT = "ER05";
             // serialPort1.WriteLine(dataOUT + "\r");
+            try
+            {
+                if (SerialNumber.Substring(SerialNumber.Length - 1) == "\r")
+                {
+                    SerialNumber = SerialNumber.Substring(0, SerialNumber.Length - 1);
+                }
+                if (File.Exists(destinationDirectory + "DUE_Serial_" + SerialNumber + ".txt"))
+                {
+                    File.Delete(destinationDirectory + "DUE_Serial_" + SerialNumber + ".txt");
+                }
+                File.Copy(fileToCopy, destinationDirectory + "DUE_Serial_" + SerialNumber + ".txt");
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message, "GDrive Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -240,13 +261,13 @@ namespace Pimax_Simulator
                     if (SW_Ready)
                     {
                         dataOUT = "PW1";
-                        serialPort1.WriteLine(dataOUT);
+                        serialPort2.WriteLine(dataOUT);
                         this.Size = new Size(282, 98);
                         this.Left = 680;
                         this.Top = 1016;
                         this.ControlBox = false;
                         this.Text = "";
-                        logger.LogInfo("Turn On by Operator");
+                        // logger.LogInfo("Turn On by Operator");
                         AutoON = true;
                     }
                     else
@@ -673,6 +694,54 @@ namespace Pimax_Simulator
             // NACK = false;
             switch (message)
             {
+                case "EZ: ":
+                    switch (msg)
+                    {
+                        case "SBE0\r":
+                             break;
+
+                        case "SBE1\r":
+                           textBoxER.Text = "Falla de tarjeta de Estator";
+                            LoggearError();
+
+                            break;
+
+                        case "HBE0\r":
+                            break;
+
+                        case "HBE1\r":
+                            textBoxER.Text = "Falla de tarjeta de Calefaccion";
+                            LoggearError();
+                            break;
+
+                        case "IBM0\r":
+                            break;
+
+                        case "IBM1\r":
+                            textBoxER.Text = "Falla de tarjeta de Inversor";
+                            LoggearError();
+                            break;
+
+                        case "FPE0\r":
+                            break;
+
+                        case "FPE1\r":
+                            textBoxER.Text = "Verificar Relay Preparacion";
+                            LoggearError();
+                            break;
+
+                        case "TMP0\r":
+                            break;
+
+                        case "TMP1\r":
+                            textBoxER.Text = "Temperatura de Tubo Exedida";
+                            LoggearError();
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
                 case "ER: ":
                     if (msg != "\r")
                     {
@@ -683,14 +752,17 @@ namespace Pimax_Simulator
                     {
                         case "LHB\r":
                              textBoxER.Text = "Falla de Lampara Testigo Calefaccion";
+                            LoggearError();
                             break;
 
                         case "CAP\r":
                             textBoxER.Text = "Falla de Estator (UCap)";
+                            LoggearError();
                             break;
 
                         case "COM\r":
                             textBoxER.Text = "Falla de Estator (ICom)";
+                            LoggearError();
                             break;
 
                         case "IBE\r":
@@ -698,6 +770,7 @@ namespace Pimax_Simulator
                             textBoxER.Text = "Falla de Inversor";
                             dataOUT = "ER05";
                             serialPort1.WriteLine(dataOUT + "\r");
+                            LoggearError();
                             break;
 
                         case "IBZ\r":
@@ -705,6 +778,7 @@ namespace Pimax_Simulator
                             textBoxER.Text = "GAT Desconectado";
                             dataOUT = "ER05";
                             serialPort1.WriteLine(dataOUT + "\r");
+                            LoggearError();
                             break;
 
                         case "FIL\r":
@@ -723,13 +797,13 @@ namespace Pimax_Simulator
                             button2.BackColor = Color.Red;
                             dataOUT = "ER03";
                             serialPort1.WriteLine(dataOUT + "\r");
+                            LoggearError();
                             break;
 
                         case "FCC\r":
                             if (buttonFF.Text == "F")
                             {
                                 textBoxER.Text = "Filamento Fino en Corto Circuito";
-                                LoggearError();
                                 buttonFF.BackColor = Color.Red;  // Small Filament CC error
                             }
                             if (buttonFF.Text == "G")
@@ -740,6 +814,7 @@ namespace Pimax_Simulator
                             button2.BackColor = Color.Red;
                             dataOUT = "ER03";
                             serialPort1.WriteLine(dataOUT + "\r");
+                            LoggearError();
                             break;
 
                         case "TMP\r":
@@ -747,6 +822,7 @@ namespace Pimax_Simulator
                             textBoxER.Text = "Temperatura de Tubo Exedida";
                             dataOUT = "ER04";
                             serialPort1.WriteLine(dataOUT + "\r");
+                            LoggearError();
                             break;
 
                         case "EEE\r":
@@ -762,6 +838,7 @@ namespace Pimax_Simulator
                             textBoxER.Text = "Baja Tension en UPower";
                             dataOUT = "ER05";
                             serialPort1.WriteLine(dataOUT + "\r");
+                            LoggearError();
                             break;
 
                         case "CPM\r":
@@ -770,6 +847,7 @@ namespace Pimax_Simulator
                             button3.BackColor = Color.Red;
                             dataOUT = "ER04";
                             serialPort1.WriteLine(dataOUT + "\r");
+                            LoggearError();
                             break;
 
                         case "FPE1\r":
@@ -799,7 +877,7 @@ namespace Pimax_Simulator
                     textBox1.Text = dataIN2.Remove(0, 4);
                     break;
                 case "SN: ":
-                    // textBoxSN.Text = dataIN2.Remove(0, 4);
+                    SerialNumber = dataIN2.Remove(0, 4);
                     break;
                 case "SW: ":
                     textBoxSW.Text = "Version " + dataIN2.Remove(0, 4);
@@ -807,6 +885,9 @@ namespace Pimax_Simulator
                     {
                         MessageBox.Show("Error de Software, Versiones incompatibles de Generador y GUI");
                         SW_Ready = false;
+                        textBoxER.Text = "Software error (DUE != GUI)";
+                        LoggearError();
+                        break;
                     }
                     SW_Ready = true;
                     break;
@@ -893,23 +974,23 @@ namespace Pimax_Simulator
                     }
                     break;
                 case "SFI:":
-                    textSFI = dataIN.Remove(0, 4);
+                    textSFI = dataIN2.Remove(0, 4);
                     break;
                 case "SRE:":
-                    textSRE = dataIN.Remove(0, 4);
+                    textSRE = dataIN2.Remove(0, 4);
                     break;
                 case "SCC:":
-                    textSCC = dataIN.Remove(0, 4);
+                    textSCC = dataIN2.Remove(0, 4);
                     break;
                 case "SIC:":
-                    textSIC = dataIN.Remove(0, 4);
+                    textSIC = dataIN2.Remove(0, 4);
                     break;
                 case "SUC:":
-                    textSUC = dataIN.Remove(0, 4);
+                    textSUC = dataIN2.Remove(0, 4);
                     break;
-//                case "UPW:":
-//                    textUPW = dataIN.Remove(0, 4);
-//                    break;
+                case "UPW:":
+                    textUPW = dataIN2.Remove(0, 4);
+                    break;
                 case "TST:":
                     // textBoxTST.Text = dataIN2.Remove(0, 4);
                     break;
