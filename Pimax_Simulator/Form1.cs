@@ -22,6 +22,7 @@ namespace Pimax_Simulator
     public partial class Form1 : Form
     {
         public static string dataOUT, path;
+        string SW_Version = "3.0\r";        // =======> Version de software para compatibilidad
         string dataIN = "", dataIN2 = "", message = "", textKVP, textKVN, textmAReal, textRmA, LastER, textSFI, textSRE, textSCC, textSIC, textSUC, textUPW;
         string Serial1PortName, Serial1BaudRate, Serial1DataBits, Serial1StopBits, Serial1Parity, Serial2PortName, Serial2BaudRate, Serial2DataBits, Serial2StopBits, Serial2Parity;
         readonly string[] mA_Table = new string[8] { "50\r", "100\r", "200\r", "300\r", "400\r", "500\r", "600\r", "700\r" };
@@ -30,6 +31,7 @@ namespace Pimax_Simulator
         Boolean NACK = false;
         Boolean AutoON = true;
         Boolean setPrep = false;
+        Boolean SW_Ready = false;
         int kvs, mas, mss, Counter;
         float mxs;
 
@@ -235,15 +237,22 @@ namespace Pimax_Simulator
             {
                 if (buttonPW.BackColor == Color.LightSkyBlue)
                 {
-                    dataOUT = "PW1";
-                    serialPort2.WriteLine(dataOUT);
-                    this.Size = new Size(282, 98);
-                    this.Left = 680;
-                    this.Top = 1016;
-                    this.ControlBox = false;
-                    this.Text = "";
-                    logger.LogInfo("Turn On by Operator");
-                    AutoON = true;
+                    if (SW_Ready)
+                    {
+                        dataOUT = "PW1";
+                        serialPort1.WriteLine(dataOUT);
+                        this.Size = new Size(282, 98);
+                        this.Left = 680;
+                        this.Top = 1016;
+                        this.ControlBox = false;
+                        this.Text = "";
+                        logger.LogInfo("Turn On by Operator");
+                        AutoON = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error de Software, Versiones incompatibles de Generador y GUI");
+                    }
                 }
                 else
                 {
@@ -791,6 +800,15 @@ namespace Pimax_Simulator
                     break;
                 case "SN: ":
                     // textBoxSN.Text = dataIN2.Remove(0, 4);
+                    break;
+                case "SW: ":
+                    textBoxSW.Text = "Version " + dataIN2.Remove(0, 4);
+                    if (dataIN2.Remove(0, 4) != SW_Version)
+                    {
+                        MessageBox.Show("Error de Software, Versiones incompatibles de Generador y GUI");
+                        SW_Ready = false;
+                    }
+                    SW_Ready = true;
                     break;
                 case "Kv: ":
                     if (textBoxKv.Text != dataIN2.Remove(0, 4))

@@ -56,6 +56,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
+            this.textBoxSW = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // serialPort1
@@ -303,12 +305,32 @@
             this.imageList2.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // textBoxSW
+            // 
+            this.textBoxSW.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxSW.Location = new System.Drawing.Point(264, 91);
+            this.textBoxSW.Name = "textBoxSW";
+            this.textBoxSW.Size = new System.Drawing.Size(103, 26);
+            this.textBoxSW.TabIndex = 111;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(274, 68);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(85, 20);
+            this.label7.TabIndex = 112;
+            this.label7.Text = "DUE SW:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(384, 441);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.textBoxSW);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.textBox1);
@@ -334,7 +356,7 @@
             this.Controls.Add(this.textBoxKv);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
-            this.Text = "Pimax IF";
+            this.Text = "Pimax IF Version 3.0";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -368,6 +390,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ImageList imageList2;
+        private System.Windows.Forms.TextBox textBoxSW;
+        private System.Windows.Forms.Label label7;
     }
 }
 
