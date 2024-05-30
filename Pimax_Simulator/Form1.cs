@@ -211,6 +211,7 @@ namespace Pimax_Simulator
         {
             // dataOUT = "ER03";
             // serialPort1.WriteLine(dataOUT + "\r");
+            Process.Start("notepad.exe", "C:\\TechDX\\LogIFDUE.txt");
         }
 
         private void button3_Click(object sender, EventArgs e)
