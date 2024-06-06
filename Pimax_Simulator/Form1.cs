@@ -25,7 +25,7 @@ namespace Pimax_Simulator
         public static string dataOUT, path;
         string SW_Version = "3.0\r";        // =======> Version de software para compatibilidad
         string SerialNumber = "";
-        string dataIN = "", dataIN2 = "", message = "", textKVP, textKVN, textmAReal, textRmA, LastER, textSFI, textSRE, textSCC, textSIC, textSUC, textUPW;
+        string dataIN = "", dataIN2 = "", message = "", textKVP, textKVN, textmAReal, textRmA, LastER, textSFI, textSRE, textSCC, textSIC, textSUC, textUPW, textHU;
         string Serial1PortName, Serial1BaudRate, Serial1DataBits, Serial1StopBits, Serial1Parity, Serial2PortName, Serial2BaudRate, Serial2DataBits, Serial2StopBits, Serial2Parity;
         readonly string[] mA_Table = new string[8] { "50\r", "100\r", "200\r", "300\r", "400\r", "500\r", "600\r", "700\r" };
         readonly string[] ms_Table = new string[30] { "2\r", "5\r", "8\r", "10\r", "20\r", "30\r", "40\r", "50\r", "60\r", "80\r", "100\r", "120\r", "150\r", "200\r", "250\r", "300\r", "400\r", "500\r", "600\r", "800\r", "1000\r", "1200\r", "1500\r", "2000\r", "2500\r", "3000\r", "3500\r", "4000\r", "4500\r", "5000\r" };
@@ -493,7 +493,12 @@ namespace Pimax_Simulator
 
                 case "KV?\r":
                     if (kvs < 100) dataOUT = "KVS0" + kvs.ToString(); else dataOUT = "KVS" + kvs.ToString();
-                    if (buttonPW.BackColor == Color.LightGreen) serialPort1.WriteLine(dataOUT + "\r");
+                    if (buttonPW.BackColor == Color.LightGreen)
+                    {
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        // dataOUT = "HUT" + textHU.ToString() + "\r";
+                        // serialPort1.WriteLine(dataOUT);
+                    }
                     break;
 
                 case "MA?\r":
@@ -1045,6 +1050,9 @@ namespace Pimax_Simulator
                         }
                     }
                     break;
+                case "HU: ":
+                    textHU = dataIN2.Remove(0, 4);
+                    break;
                 case "FT: ":
                     if (msg == "0\r")
                     {
@@ -1114,12 +1122,14 @@ namespace Pimax_Simulator
                         button2.BackColor = Color.LightGreen;
                         button3.BackColor = Color.LightGreen;
                         // GUI_Sound(2);
+                        dataOUT = "RIN1880";                      // Enviar al Software VXvue el Preparacion OK
+                        serialPort1.WriteLine(dataOUT + "\r");
                     }
                     if (msg == "2\r")
                     {
-                        dataOUT = "RIN1880";                      // Enviar al Software VXvue el Preparacion OK
-                        serialPort1.WriteLine(dataOUT + "\r");
-                        Thread.Sleep(300);
+                        // dataOUT = "RIN1880";                      // Enviar al Software VXvue el Preparacion OK
+                        // serialPort1.WriteLine(dataOUT + "\r");
+                        // Thread.Sleep(300);
                         dataOUT = "PRI";
                         serialPort1.WriteLine(dataOUT + "\r");
                         setPrep = true;
