@@ -1169,8 +1169,7 @@ namespace Pimax_Simulator
                                    " ms:" + textBoxms.Text.Substring(0, textBoxms.Text.Length - 1) +
                                    " Kv+:" + textKVP.Substring(0, textKVP.Length - 1) +
                                    " Kv-:" + textKVN.Substring(0, textKVN.Length - 1) +
-                                   " mA:" + textmAReal.Substring(0, textmAReal.Length - 1) +
-                                   " %HU:" + textHU);
+                                   " mA:" + textmAReal + " %HU:" + textHU);
 
                     // logger.LogWarning("Este es un mensaje de advertencia.");
                     // logger.LogError("Este es un mensaje de error.");
