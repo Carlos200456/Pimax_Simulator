@@ -1169,7 +1169,8 @@ namespace Pimax_Simulator
                                    " ms:" + textBoxms.Text.Substring(0, textBoxms.Text.Length - 1) +
                                    " Kv+:" + textKVP.Substring(0, textKVP.Length - 1) +
                                    " Kv-:" + textKVN.Substring(0, textKVN.Length - 1) +
-                                   " mA:" + textmAReal);
+                                   " mA:" + textmAReal +
+                                   " %HU:" + textHU.Substring(0, textHU.Length - 1));
 
                     // logger.LogWarning("Este es un mensaje de advertencia.");
                     // logger.LogError("Este es un mensaje de error.");
@@ -1228,7 +1229,8 @@ namespace Pimax_Simulator
                                 " ,Sense CC:" + textSCC.Substring(0, textSCC.Length - 1) +
                                 " ,U Cap:" + textSUC.Substring(0, textSUC.Length - 1) +
                                 " ,I Com:" + textSIC.Substring(0, textSIC.Length - 1) +
-                                " ,U Power:" + textUPW.Substring(0, textUPW.Length - 1));
+                                " ,U Power:" + textUPW.Substring(0, textUPW.Length - 1) +
+                                " ,%HU:" + textHU.Substring(0, textHU.Length - 1));
                     LastER = textBoxER.Text;
                 }
                 catch (Exception err)
