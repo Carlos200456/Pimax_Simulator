@@ -34,7 +34,7 @@ namespace Pimax_Simulator
         Boolean AutoON = true;
         Boolean setPrep = false;
         Boolean SW_Ready = false;
-        int kvs, mas, mss, Counter;
+        int kvs, mas, mss, Counter, PROK;
         float mxs;
 
         string fileToCopy = "C:\\TechDX\\LogIFDUE.txt";
@@ -540,6 +540,7 @@ namespace Pimax_Simulator
                     break;
 
                 case "MA+\r":
+                    if (PROK != 0) { GUI_Sound(6); break; }
                     mA = 0;
                     for (int i = 0; i <= 6; ++i)      //    Limitado a 7 Valores Maximo disponible 8
                     {
@@ -566,6 +567,7 @@ namespace Pimax_Simulator
                     break;
 
                 case "MA-\r":
+                    if (PROK != 0) { GUI_Sound(6); break; }
                     mA = 0;
                     for (int i = 0; i <= 7; ++i)      //    Limitado a 7 Valores Maximo disponible 8
                     {
@@ -1109,6 +1111,7 @@ namespace Pimax_Simulator
                 case "POK:":
                     if (msg == "0\r")
                     {
+                        PROK = 0;
                         if (setPrep)
                         {
                             dataOUT = "PRO";
@@ -1118,6 +1121,7 @@ namespace Pimax_Simulator
                     }
                     if (msg == "1\r")
                     {
+                        PROK = 1;
                         button1.BackColor = Color.LightGreen;
                         button2.BackColor = Color.LightGreen;
                         button3.BackColor = Color.LightGreen;
@@ -1127,6 +1131,7 @@ namespace Pimax_Simulator
                     }
                     if (msg == "2\r")
                     {
+                        PROK = 2;
                         // dataOUT = "RIN1880";                      // Enviar al Software VXvue el Preparacion OK
                         // serialPort1.WriteLine(dataOUT + "\r");
                         // Thread.Sleep(300);
