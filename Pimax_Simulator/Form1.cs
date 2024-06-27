@@ -1270,7 +1270,7 @@ namespace Pimax_Simulator
         {
             this.logFilePath = logFilePath;
             // Si el archivo no existe, crea uno nuevo; si existe, lo abre en modo append (agregar al final).
-            File.AppendAllText(logFilePath, $"{ DateTime.Now} [INFO]  === Inicio de Log Interface Pimax VxView ===" + Environment.NewLine);
+            File.AppendAllText(logFilePath, "=== Inicio de Log Interface Pimax VxView ===" + Environment.NewLine);
         }
 
         public void LogInfo(string message)
