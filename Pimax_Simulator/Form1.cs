@@ -34,7 +34,7 @@ namespace Pimax_Simulator
         Boolean AutoON = true;
         Boolean setPrep = false;
         Boolean SW_Ready = false;
-        int kvs, mas, mss, Counter, PROK;
+        int kvs, mas, mss, Counter, PROK, RXOK;
         float mxs;
 
         string fileToCopy = "C:\\TechDX\\LogIFDUE.txt";
@@ -44,6 +44,42 @@ namespace Pimax_Simulator
         StringBuilder sb2 = new StringBuilder();
         char LF = (char)10;
         char CR = (char)13;
+
+        private void buttonPrep_Click(object sender, EventArgs e)
+        {
+            Beep(1000, 10);
+            if (serialPort2.IsOpen)
+            {
+                if (PROK > 0)
+                {
+                    dataOUT = "PR0";
+                    serialPort2.WriteLine(dataOUT);
+                }
+                else
+                {
+                    dataOUT = "PR1";
+                    serialPort2.WriteLine(dataOUT);
+                }
+            }
+        }
+
+        private void buttonRX_Click(object sender, EventArgs e)
+        {
+            if (serialPort2.IsOpen)
+            {
+                if (RXOK > 0)
+                {
+                    dataOUT = "RX0";
+                    serialPort2.WriteLine(dataOUT);
+                }
+                else
+                {
+                    dataOUT = "RX1";
+                    if (PROK == 2) serialPort2.WriteLine(dataOUT);
+                }
+            }
+
+        }
 
         System.Windows.Forms.Timer t = null;
 
@@ -59,11 +95,17 @@ namespace Pimax_Simulator
         {
             InitializeComponent();
             path = AppDomain.CurrentDomain.BaseDirectory;
-            SetImage(path + "About.png");
+            // SetImage(path + "About.png");
             // Create an isntance of XmlTextReader and call Read method to read the file  
             XmlTextReader configReader = new XmlTextReader("C:\\TechDX\\ConfigIF.xml");
             
             LastER = "";
+            buttonPrep.Hide(); // Hide buttonPrep
+            buttonRX.Hide(); // Hide buttonRX
+            buttonPrep.BackgroundImageLayout = ImageLayout.Stretch;
+            PROK = 0;
+            buttonRX.BackgroundImageLayout = ImageLayout.Stretch;
+            RXOK = 0;
 
             try
             {
@@ -263,7 +305,7 @@ namespace Pimax_Simulator
                     {
                         dataOUT = "PW1";
                         serialPort2.WriteLine(dataOUT);
-                        this.Size = new Size(282, 98);
+                        this.Size = new Size(350, 98);
                         this.Left = 680;
                         this.Top = 1016;
                         this.ControlBox = false;
@@ -496,8 +538,8 @@ namespace Pimax_Simulator
                     if (buttonPW.BackColor == Color.LightGreen)
                     {
                         serialPort1.WriteLine(dataOUT + "\r");
-                        // dataOUT = "HUT" + textHU.ToString() + "\r";
-                        // serialPort1.WriteLine(dataOUT);
+                        dataOUT = "HUS" + textHU.ToString();
+                        serialPort1.WriteLine(dataOUT + "\r");
                     }
                     break;
 
@@ -1111,13 +1153,19 @@ namespace Pimax_Simulator
                 case "POK:":
                     if (msg == "0\r")
                     {
-                        PROK = 0;
                         if (setPrep)
                         {
                             dataOUT = "PRO";
                             serialPort1.WriteLine(dataOUT + "\r");
                             setPrep = false;
                         }
+                        buttonPrep.BackColor = Color.Gray;
+                        buttonPrep.BackgroundImage = Properties.Resources.preparacion_48x48_Disable;
+                        buttonPrep.Refresh();
+                        buttonRX.BackColor = Color.Gray;
+                        buttonRX.BackgroundImage = Properties.Resources.rayOff_48x48;
+                        buttonRX.Refresh();
+                        PROK = 0;
                     }
                     if (msg == "1\r")
                     {
@@ -1125,6 +1173,7 @@ namespace Pimax_Simulator
                         button1.BackColor = Color.LightGreen;
                         button2.BackColor = Color.LightGreen;
                         button3.BackColor = Color.LightGreen;
+                        buttonPrep.BackColor = Color.LightBlue;
                         // GUI_Sound(2);
                         dataOUT = "RIN1880";                      // Enviar al Software VXvue el Preparacion OK
                         serialPort1.WriteLine(dataOUT + "\r");
@@ -1132,9 +1181,8 @@ namespace Pimax_Simulator
                     if (msg == "2\r")
                     {
                         PROK = 2;
-                        // dataOUT = "RIN1880";                      // Enviar al Software VXvue el Preparacion OK
-                        // serialPort1.WriteLine(dataOUT + "\r");
-                        // Thread.Sleep(300);
+                        buttonPrep.BackgroundImage = Properties.Resources.preparacion_48x48;
+                        buttonPrep.Refresh();
                         dataOUT = "PRI";
                         serialPort1.WriteLine(dataOUT + "\r");
                         setPrep = true;
@@ -1145,6 +1193,7 @@ namespace Pimax_Simulator
                     if (msg == "0\r")
                     {
                         // buttonPrep
+                        RXOK = 0;
                     }
                     if (msg == "1\r")
                     {
@@ -1154,6 +1203,10 @@ namespace Pimax_Simulator
                         serialPort1.WriteLine(dataOUT + "\r");
                         dataOUT = "PRO";
                         serialPort1.WriteLine(dataOUT + "\r");
+                        buttonRX.BackColor = Color.Gray;
+                        buttonRX.BackgroundImage = Properties.Resources.ray_48x48;
+                        buttonRX.Refresh();
+                        RXOK = 1;
                     }
                     break;
                 case "EEP:":
@@ -1187,11 +1240,15 @@ namespace Pimax_Simulator
             if ((textBox1.Text == "OFF\r") || (textBox1.Text == "ERROR\r") || (textBox1.Text == "\r"))
             {
                 buttonPW.BackColor = Color.LightSkyBlue;
+                buttonPrep.Hide(); // Hide buttonPrep
+                buttonRX.Hide(); // Hide buttonRX
             }
 
             if ((textBox1.Text == "IDLE\r")) // || (textBox1.Text == "ERROR\r") || (textBox1.Text == "\r")
             {
                 buttonPW.BackColor = Color.LightGreen;
+                buttonPrep.Show();// Show buttonPrep
+                buttonRX.Show(); // Show buttonRX
             }
 
             if ((textBoxmA.Text != "") && (textBoxms.Text != ""))
