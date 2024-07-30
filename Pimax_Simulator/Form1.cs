@@ -1116,11 +1116,6 @@ namespace Pimax_Simulator
                     }
                     break;
                 case "RD: ":
-                    if ((buttonPW.BackColor == Color.LightSkyBlue) && AutoON)
-                    {
-                        buttonPW_Click(sender, e);
-                    }
-
                     if (msg == "0\r")
                     {
                      //   buttonSPot1.BackColor = Color.LightYellow;
@@ -1190,6 +1185,10 @@ namespace Pimax_Simulator
                     }
                     break;
                 case "XOK:":
+                    if ((buttonPW.BackColor == Color.LightSkyBlue) && AutoON)
+                    {
+                        buttonPW_Click(sender, e);
+                    }
                     if (msg == "0\r")
                     {
                         // buttonPrep
@@ -1300,6 +1299,8 @@ namespace Pimax_Simulator
                 }
 
             }
+            this.Size = new Size(350, 130);
+            this.Top = 960;
         }
 
         public void GUI_Sound(int soundIndex)
