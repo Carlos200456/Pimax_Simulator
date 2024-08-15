@@ -310,6 +310,8 @@ namespace Pimax_Simulator
                         this.Top = 1016;
                         this.ControlBox = false;
                         this.Text = "";
+                        // Assuming you have a form named 'myForm'
+                        this.WindowState = FormWindowState.Normal;
                         // logger.LogInfo("Turn On by Operator");
                         AutoON = true;
                     }
@@ -880,7 +882,11 @@ namespace Pimax_Simulator
                             break;
 
                         case "SYM\r":
+                            textBoxER.ForeColor = Color.Red;
                             textBoxER.Text = "Simulador Activado";
+                            this.Size = new Size(350, 130);
+                            this.Top = 960;
+                            logger.LogWarning("Simulador Activado");
                             break;
 
                         case "UPW\r":
@@ -1226,7 +1232,7 @@ namespace Pimax_Simulator
                                    " ms:" + textBoxms.Text.Substring(0, textBoxms.Text.Length - 1) +
                                    " Kv+:" + textKVP.Substring(0, textKVP.Length - 1) +
                                    " Kv-:" + textKVN.Substring(0, textKVN.Length - 1) +
-                                   " mA:" + textmAReal + " %HU:" + textHU);
+                                   " mA:" + textmAReal + " %HU:" + textHU.Substring(0, textHU.Length - 1));
 
                     // logger.LogWarning("Este es un mensaje de advertencia.");
                     // logger.LogError("Este es un mensaje de error.");

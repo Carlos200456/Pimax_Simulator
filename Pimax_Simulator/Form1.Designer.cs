@@ -380,6 +380,7 @@
             this.Controls.Add(this.textBoxmA);
             this.Controls.Add(this.textBoxKv);
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Pimax IF Version 3.0";
             this.ResumeLayout(false);
