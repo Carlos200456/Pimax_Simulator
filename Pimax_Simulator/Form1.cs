@@ -1226,12 +1226,17 @@ namespace Pimax_Simulator
                     }
                     break;
                 case "EEP:":
-                    // ConfigSize = Convert.ToInt32(dataIN.Remove(0, 4));
+                    // ConfigSize = Convert.ToInt32(dataIN2.Remove(0, 4));
                     // ConfigReady = true;
                     break;
 
                 case "TC1:":
-                    // textBoxTC1.Text = dataIN.Remove(0, 4) + "ºC";
+                    // textBoxTC1.Text = dataIN2.Remove(0, 4) + "ºC";
+                    break;
+
+                case "CINE":
+                    textmAReal = dataIN2.Remove(0, 4);
+                    textmAReal = textmAReal.Substring(0, textmAReal.Length - 1);
                     break;
 
                 case "LOG:":
