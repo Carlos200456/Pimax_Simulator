@@ -23,7 +23,7 @@ namespace Pimax_Simulator
     public partial class Form1 : Form
     {
         public static string dataOUT, path;
-        string SW_Version = "3.0\r";        // =======> Version de software para compatibilidad
+        string SW_Version = "3.1\r";        // =======> Version de software para compatibilidad
         string SerialNumber = "";
         string dataIN = "", dataIN2 = "", message = "", textKVP, textKVN, textmAReal, textRmA, LastER, textSFI, textSRE, textSCC, textSIC, textSUC, textUPW, textHU;
         string Serial1PortName, Serial1BaudRate, Serial1DataBits, Serial1StopBits, Serial1Parity, Serial2PortName, Serial2BaudRate, Serial2DataBits, Serial2StopBits, Serial2Parity;
@@ -802,6 +802,13 @@ namespace Pimax_Simulator
                     }
                     switch (msg)
                     {
+                        case "PED\r":
+                            textBoxER.Text = "Disparo terminado por el operador";
+                            this.Size = new Size(350, 130);
+                            this.Top = 960;
+                            logger.LogWarning("Disparo terminado por el operador");
+                            break;
+
                         case "LHB\r":
                              textBoxER.Text = "Falla de Lampara Testigo Calefaccion";
                             LoggearError();
@@ -1188,6 +1195,10 @@ namespace Pimax_Simulator
                         serialPort1.WriteLine(dataOUT + "\r");
                         setPrep = true;
                         GUI_Sound(1);
+                        textBoxER.Text = "";
+                        this.Size = new Size(350, 98);
+                        this.Left = 680;
+                        this.Top = 1016;
                     }
                     break;
                 case "XOK:":
