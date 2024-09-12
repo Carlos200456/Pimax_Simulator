@@ -254,7 +254,7 @@ namespace Pimax_Simulator
             // Open a dialog box to enter a password
             Form2 form2 = new Form2();
             form2.StartPosition = FormStartPosition.Manual;
-            form2.Location = new Point(740, 950); // Set the desired location here
+            form2.Location = new Point(740, 930); // Set the desired location here
             form2.Text = "Ingrese la Contraseña [Tab]";
             // remove the close button
             form2.ControlBox = false;
