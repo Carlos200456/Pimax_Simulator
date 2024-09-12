@@ -251,9 +251,14 @@ namespace Pimax_Simulator
 
         private void button2_Click(object sender, EventArgs e)
         {
-            // dataOUT = "ER03";
-            // serialPort1.WriteLine(dataOUT + "\r");
-            Process.Start("notepad.exe", "C:\\TechDX\\LogIFDUE.txt");
+            // Open a dialog box to enter a password
+            Form2 form2 = new Form2();
+            form2.StartPosition = FormStartPosition.Manual;
+            form2.Location = new Point(740, 950); // Set the desired location here
+            form2.Text = "Ingrese la Contraseña [Tab]";
+            // remove the close button
+            form2.ControlBox = false;
+            form2.ShowDialog();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -805,10 +810,11 @@ namespace Pimax_Simulator
                     switch (msg)
                     {
                         case "PED\r":
-                            textBoxER.Text = "Disparo terminado por el operador";
+                            textBoxER.ForeColor = Color.Red;
+                            textBoxER.Text = "Disparo abortado por el operador";
                             this.Size = new Size(350, 130);
                             this.Top = 960;
-                            logger.LogWarning("Disparo terminado por el operador");
+                            logger.LogWarning("Disparo abortado por el operador");
                             break;
 
                         case "LHB\r":
