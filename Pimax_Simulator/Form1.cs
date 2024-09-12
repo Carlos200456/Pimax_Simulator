@@ -25,7 +25,7 @@ namespace Pimax_Simulator
         public static string dataOUT, path;
         string SW_Version = "3.1\r";        // =======> Version de software para compatibilidad
         string SerialNumber = "";
-        string dataIN = "", dataIN2 = "", message = "", textKVP, textKVN, textmAReal, textRmA, LastER, textSFI, textSRE, textSCC, textSIC, textSUC, textUPW, textHU;
+        string dataIN = "", dataIN2 = "", message = "", textKVP, textKVN, textmAReal, textRmA, LastER, textSFI, textSRE, textSCC, textSIC, textSUC, textUPW, textHU, textKVF;
         string Serial1PortName, Serial1BaudRate, Serial1DataBits, Serial1StopBits, Serial1Parity, Serial2PortName, Serial2BaudRate, Serial2DataBits, Serial2StopBits, Serial2Parity;
         readonly string[] mA_Table = new string[8] { "50\r", "100\r", "200\r", "300\r", "400\r", "500\r", "600\r", "700\r" };
         readonly string[] ms_Table = new string[30] { "2\r", "5\r", "8\r", "10\r", "20\r", "30\r", "40\r", "50\r", "60\r", "80\r", "100\r", "120\r", "150\r", "200\r", "250\r", "300\r", "400\r", "500\r", "600\r", "800\r", "1000\r", "1200\r", "1500\r", "2000\r", "2500\r", "3000\r", "3500\r", "4000\r", "4500\r", "5000\r" };
@@ -1051,6 +1051,9 @@ namespace Pimax_Simulator
                 case "SUC:":
                     textSUC = dataIN2.Remove(0, 4);
                     break;
+                case "KVF:":
+                    textKVF = dataIN2.Remove(0, 4);
+                    break;
                 case "UPW:":
                     textUPW = dataIN2.Remove(0, 4);
                     break;
@@ -1312,7 +1315,8 @@ namespace Pimax_Simulator
                                 " ,U Cap:" + textSUC.Substring(0, textSUC.Length - 1) +
                                 " ,I Com:" + textSIC.Substring(0, textSIC.Length - 1) +
                                 " ,U Power:" + textUPW.Substring(0, textUPW.Length - 1) +
-                                " ,%HU:" + textHU.Substring(0, textHU.Length - 1));
+                                " ,%HU:" + textHU.Substring(0, textHU.Length - 1) +
+                                " ,KVF:" + textKVF.Substring(0, textKVF.Length - 1));
                     LastER = textBoxER.Text;
                 }
                 catch (Exception err)
