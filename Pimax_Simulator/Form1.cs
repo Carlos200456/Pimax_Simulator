@@ -178,7 +178,7 @@ namespace Pimax_Simulator
         private void StartTimer()
         {
             t = new System.Windows.Forms.Timer();
-            t.Interval = 2000;
+            t.Interval = 1000;
             t.Tick += new EventHandler(t_Tick);
             t.Enabled = true;
         }
@@ -351,6 +351,8 @@ namespace Pimax_Simulator
             textBoxms.Text = "";
             textBoxmAs.Text = "";
             textBoxVCC.Text = "";
+            SW_Ready = false;
+            Counter = 0;
             Refresh();
         }
 
