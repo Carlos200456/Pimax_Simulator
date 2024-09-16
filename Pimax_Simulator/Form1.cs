@@ -33,7 +33,7 @@ namespace Pimax_Simulator
         Boolean NACK = false;
         Boolean AutoON = true;
         Boolean setPrep = false;
-        Boolean SW_Ready = false;
+        Boolean SW_Ready = true;
         int kvs, mas, mss, Counter, PROK, RXOK;
         float mxs;
 
@@ -356,7 +356,7 @@ namespace Pimax_Simulator
             textBoxms.Text = "";
             textBoxmAs.Text = "";
             textBoxVCC.Text = "";
-            SW_Ready = false;
+            SW_Ready = true;
             Counter = 0;
             Refresh();
         }
@@ -952,14 +952,14 @@ namespace Pimax_Simulator
                     break;
                 case "SW: ":
                     textBoxSW.Text = "Version " + dataIN2.Remove(0, 4);
-                    if (dataIN2.Remove(0, 4) != SW_Version)
-                    {
-                        MessageBox.Show("Error de Software, Versiones incompatibles de Generador y GUI");
-                        SW_Ready = false;
-                        textBoxER.Text = "Software error (DUE != GUI)";
-                        LoggearError();
-                        break;
-                    }
+ //                   if (dataIN2.Remove(0, 4) != SW_Version)
+ //                   {
+ //                       MessageBox.Show("Error de Software, Versiones incompatibles de Generador y GUI");
+ //                       SW_Ready = false;
+ //                       textBoxER.Text = "Software error (DUE != GUI)";
+ //                       LoggearError();
+ //                       break;
+ //                   }
                     SW_Ready = true;
                     break;
                 case "Kv: ":

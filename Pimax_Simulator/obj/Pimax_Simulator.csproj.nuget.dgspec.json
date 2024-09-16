@@ -1,28 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {}
+    "C:\\Users\\Carlos\\source\\GitHub\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {
+    "C:\\Users\\Carlos\\source\\GitHub\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+        "projectUniqueName": "C:\\Users\\Carlos\\source\\GitHub\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
         "projectName": "Pimax_Simulator",
-        "projectPath": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
-        "packagesPath": "C:\\Users\\crequejo.PIM\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\crequejo.PIM\\source\\repos\\Pimax_Simulator\\Pimax_Simulator\\obj\\",
+        "projectPath": "C:\\Users\\Carlos\\source\\GitHub\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\Pimax_Simulator.csproj",
+        "packagesPath": "C:\\Users\\Carlos\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Carlos\\source\\GitHub\\Carlos200456\\Pimax_Simulator\\Pimax_Simulator\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\crequejo.PIM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Carlos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net48"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
         },
         "frameworks": {
           "net48": {
@@ -34,17 +37,12 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net48": {
           "targetAlias": "net48",
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
