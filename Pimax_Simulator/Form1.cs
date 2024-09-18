@@ -45,6 +45,17 @@ namespace Pimax_Simulator
         char LF = (char)10;
         char CR = (char)13;
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonTV_Click(object sender, EventArgs e)
+        {
+            // Start TeamViewer
+            Process.Start("C:\\TechDX\\TeamViewer.bat", "C:\\TechDX\\LogIFDUE.txt");
+        }
+
         private void buttonPrep_Click(object sender, EventArgs e)
         {
             Beep(1000, 10);

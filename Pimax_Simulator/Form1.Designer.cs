@@ -60,6 +60,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.buttonRX = new System.Windows.Forms.Button();
             this.buttonPrep = new System.Windows.Forms.Button();
+            this.buttonTV = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // serialPort1
@@ -96,7 +97,7 @@
             // buttonFF
             // 
             this.buttonFF.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonFF.Location = new System.Drawing.Point(322, 186);
+            this.buttonFF.Location = new System.Drawing.Point(276, 186);
             this.buttonFF.Name = "buttonFF";
             this.buttonFF.Size = new System.Drawing.Size(36, 36);
             this.buttonFF.TabIndex = 92;
@@ -106,7 +107,7 @@
             // buttonFG
             // 
             this.buttonFG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonFG.Location = new System.Drawing.Point(314, 178);
+            this.buttonFG.Location = new System.Drawing.Point(268, 178);
             this.buttonFG.Name = "buttonFG";
             this.buttonFG.Size = new System.Drawing.Size(52, 52);
             this.buttonFG.TabIndex = 91;
@@ -165,10 +166,10 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(259, 194);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(236, 194);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 20);
+            this.label4.Size = new System.Drawing.Size(31, 13);
             this.label4.TabIndex = 98;
             this.label4.Text = "Foco";
             // 
@@ -219,7 +220,7 @@
             // textBoxVCC
             // 
             this.textBoxVCC.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxVCC.Location = new System.Drawing.Point(188, 185);
+            this.textBoxVCC.Location = new System.Drawing.Point(158, 185);
             this.textBoxVCC.Name = "textBoxVCC";
             this.textBoxVCC.Size = new System.Drawing.Size(65, 35);
             this.textBoxVCC.TabIndex = 103;
@@ -228,19 +229,19 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(137, 192);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(131, 192);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(45, 20);
+            this.label5.Size = new System.Drawing.Size(28, 13);
             this.label5.TabIndex = 104;
             this.label5.Text = "VCC";
             // 
             // buttonLuzCol
             // 
             this.buttonLuzCol.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonLuzCol.Location = new System.Drawing.Point(77, 5);
+            this.buttonLuzCol.Location = new System.Drawing.Point(60, 5);
             this.buttonLuzCol.Name = "buttonLuzCol";
-            this.buttonLuzCol.Size = new System.Drawing.Size(57, 45);
+            this.buttonLuzCol.Size = new System.Drawing.Size(44, 45);
             this.buttonLuzCol.TabIndex = 105;
             this.buttonLuzCol.Text = "Colim";
             this.buttonLuzCol.UseVisualStyleBackColor = true;
@@ -250,7 +251,7 @@
             // 
             this.buttonPW.Location = new System.Drawing.Point(6, 5);
             this.buttonPW.Name = "buttonPW";
-            this.buttonPW.Size = new System.Drawing.Size(57, 45);
+            this.buttonPW.Size = new System.Drawing.Size(44, 45);
             this.buttonPW.TabIndex = 106;
             this.buttonPW.Text = "Enc.";
             this.buttonPW.UseVisualStyleBackColor = true;
@@ -328,9 +329,9 @@
             // buttonRX
             // 
             this.buttonRX.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonRX.Location = new System.Drawing.Point(261, 5);
+            this.buttonRX.Location = new System.Drawing.Point(206, 5);
             this.buttonRX.Name = "buttonRX";
-            this.buttonRX.Size = new System.Drawing.Size(45, 45);
+            this.buttonRX.Size = new System.Drawing.Size(44, 45);
             this.buttonRX.TabIndex = 114;
             this.buttonRX.UseVisualStyleBackColor = true;
             this.buttonRX.Click += new System.EventHandler(this.buttonRX_Click);
@@ -338,12 +339,23 @@
             // buttonPrep
             // 
             this.buttonPrep.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonPrep.Location = new System.Drawing.Point(175, 5);
+            this.buttonPrep.Location = new System.Drawing.Point(141, 5);
             this.buttonPrep.Name = "buttonPrep";
-            this.buttonPrep.Size = new System.Drawing.Size(45, 45);
+            this.buttonPrep.Size = new System.Drawing.Size(44, 45);
             this.buttonPrep.TabIndex = 113;
             this.buttonPrep.UseVisualStyleBackColor = true;
             this.buttonPrep.Click += new System.EventHandler(this.buttonPrep_Click);
+            // 
+            // buttonTV
+            // 
+            this.buttonTV.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonTV.Location = new System.Drawing.Point(285, 6);
+            this.buttonTV.Name = "buttonTV";
+            this.buttonTV.Size = new System.Drawing.Size(44, 45);
+            this.buttonTV.TabIndex = 115;
+            this.buttonTV.Text = "TV";
+            this.buttonTV.UseVisualStyleBackColor = true;
+            this.buttonTV.Click += new System.EventHandler(this.buttonTV_Click);
             // 
             // Form1
             // 
@@ -352,6 +364,7 @@
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(374, 446);
+            this.Controls.Add(this.buttonTV);
             this.Controls.Add(this.buttonRX);
             this.Controls.Add(this.buttonPrep);
             this.Controls.Add(this.label7);
@@ -383,6 +396,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Pimax IF Version 3.1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -420,6 +434,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button buttonPrep;
         private System.Windows.Forms.Button buttonRX;
+        private System.Windows.Forms.Button buttonTV;
     }
 }
 
