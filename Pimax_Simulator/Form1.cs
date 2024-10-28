@@ -178,7 +178,7 @@ namespace Pimax_Simulator
         private void StartTimer()
         {
             t = new System.Windows.Forms.Timer();
-            t.Interval = 1000;
+            t.Interval = 3000;
             t.Tick += new EventHandler(t_Tick);
             t.Enabled = true;
         }
@@ -186,26 +186,29 @@ namespace Pimax_Simulator
         void t_Tick(object sender, EventArgs e)
         {
             Counter += 1;
-            if (Counter == 10)
+            if (Counter == 4)
             {
                 buttonHRST_Click(sender, e);
-            }
-            dataOUT = "HS";
-            serialPort2.WriteLine(dataOUT);
-            if (WaitForACK())
-            {
-                buttonPW.BackColor = Color.LightGreen;
-                ACK = false;
-                LastER = "";
-            }
+            } 
             else
             {
-                buttonPW.BackColor = Color.Red;
-                ACK = false;
-                if (LastER != "Hand Shake Error")
+                dataOUT = "HS";
+                serialPort2.WriteLine(dataOUT);
+                if (WaitForACK())
                 {
-                    logger.LogError("Hand Shake Error");
-                    LastER = "Hand Shake Error";
+                    buttonPW.BackColor = Color.LightGreen;
+                    ACK = false;
+                    LastER = "";
+                }
+                else
+                {
+                    buttonPW.BackColor = Color.Red;
+                    ACK = false;
+                    if (LastER != "Hand Shake Error")
+                    {
+                        logger.LogError("Hand Shake Error");
+                        LastER = "Hand Shake Error";
+                    }
                 }
             }
         }
