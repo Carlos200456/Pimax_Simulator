@@ -34,6 +34,8 @@ namespace Pimax_Simulator
         Boolean AutoON = true;
         Boolean setPrep = false;
         Boolean SW_Ready = true;
+        Boolean NoPaso = true;
+        Boolean NoPaso2 = true;
         int kvs, mas, mss, Counter, PROK, RXOK;
         float mxs;
 
@@ -44,6 +46,34 @@ namespace Pimax_Simulator
         StringBuilder sb2 = new StringBuilder();
         char LF = (char)10;
         char CR = (char)13;
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonTV_Click(object sender, EventArgs e)
+        {
+            // Start TeamViewer
+            Process.Start("C:\\TechDX\\TeamViewer.bat");
+        }
+
+        private void buttonKY_Click(object sender, EventArgs e)
+        {
+            Process.Start("C:\\TechDX\\Teclado.bat");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            // Open a dialog box to enter a password
+            Form2 form2 = new Form2();
+            form2.StartPosition = FormStartPosition.Manual;
+            form2.Location = new Point(740, 930); // Set the desired location here
+            form2.Text = "Ingrese la Contraseña [Tab]";
+            // remove the close button
+            form2.ControlBox = false;
+            form2.ShowDialog();
+        }
 
         private void buttonPrep_Click(object sender, EventArgs e)
         {
@@ -106,6 +136,8 @@ namespace Pimax_Simulator
             PROK = 0;
             buttonRX.BackgroundImageLayout = ImageLayout.Stretch;
             RXOK = 0;
+            buttonKY.BackgroundImageLayout = ImageLayout.Stretch;
+            buttonKY.BackgroundImage = Properties.Resources.keyboard;
 
             try
             {
@@ -194,7 +226,7 @@ namespace Pimax_Simulator
             serialPort2.WriteLine(dataOUT);
             if (WaitForACK())
             {
-                buttonPW.BackColor = Color.LightGreen;
+                // buttonPW.BackColor = Color.LightGreen;
                 ACK = false;
                 LastER = "";
             }
@@ -310,13 +342,17 @@ namespace Pimax_Simulator
                     {
                         dataOUT = "PW1";
                         serialPort2.WriteLine(dataOUT);
-                        this.Size = new Size(350, 98);
-                        this.Left = 680;
-                        this.Top = 1016;
-                        this.ControlBox = false;
-                        this.Text = "";
-                        // Assuming you have a form named 'myForm'
-                        this.WindowState = FormWindowState.Normal;
+                        if (NoPaso)
+                        {
+                            this.Size = new Size(350, 98);
+                            this.Left = 680;
+                            this.Top = 1016;
+                            this.ControlBox = false;
+                            this.Text = "";
+                            // Assuming you have a form named 'myForm'
+                            this.WindowState = FormWindowState.Normal;
+                            NoPaso = false;
+                        }
                         // logger.LogInfo("Turn On by Operator");
                         AutoON = true;
                     }
@@ -358,6 +394,8 @@ namespace Pimax_Simulator
             textBoxVCC.Text = "";
             SW_Ready = true;
             Counter = 0;
+            NoPaso = true;
+            NoPaso2 = true;
             Refresh();
         }
 
@@ -805,7 +843,6 @@ namespace Pimax_Simulator
                     if (msg != "\r")
                     {
                         textBoxER.Text = "";
-                        GUI_Sound(6);
                     }
                     switch (msg)
                     {
@@ -1210,6 +1247,8 @@ namespace Pimax_Simulator
                         this.Size = new Size(350, 98);
                         this.Left = 680;
                         this.Top = 1016;
+                        NoPaso = true;
+                        NoPaso2 = true;
                     }
                     break;
                 case "XOK:":
@@ -1313,6 +1352,7 @@ namespace Pimax_Simulator
         {
             if (LastER != textBoxER.Text)
             {
+                GUI_Sound(6);
                 try
                 {
                     logger.LogError(textBoxER.Text);
@@ -1331,10 +1371,13 @@ namespace Pimax_Simulator
                 {
                     // MessageBox.Show(err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
-            this.Size = new Size(350, 130);
-            this.Top = 960;
+            if (NoPaso2)
+            {
+                this.Size = new Size(350, 130);
+                this.Top = 960;
+                NoPaso2 = false;
+            }
         }
 
         public void GUI_Sound(int soundIndex)

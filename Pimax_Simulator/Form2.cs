@@ -27,6 +27,10 @@ namespace Pimax_Simulator
             {
                 Process.Start("notepad.exe", "C:\\TechDX\\LogIFDUE.txt");
             }
+            if (textBox1.Text == "4431")
+            {
+                Process.Start("C:\\TechDX\\Service.bat");
+            }
             this.Close();
         }
     }
