@@ -222,22 +222,25 @@ namespace Pimax_Simulator
             {
                 buttonHRST_Click(sender, e);
             }
-            dataOUT = "HS";
-            serialPort2.WriteLine(dataOUT);
-            if (WaitForACK())
-            {
-                // buttonPW.BackColor = Color.LightGreen;
-                ACK = false;
-                LastER = "";
-            }
             else
             {
-                buttonPW.BackColor = Color.Red;
-                ACK = false;
-                if (LastER != "Hand Shake Error")
+                dataOUT = "HS";
+                serialPort2.WriteLine(dataOUT);
+                if (WaitForACK())
                 {
-                    logger.LogError("Hand Shake Error");
-                    LastER = "Hand Shake Error";
+                    // buttonPW.BackColor = Color.LightGreen;
+                    ACK = false;
+                    LastER = "";
+                }
+                else
+                {
+                    buttonPW.BackColor = Color.Red;
+                    ACK = false;
+                    if (LastER != "Hand Shake Error")
+                    {
+                        logger.LogError("Hand Shake Error");
+                        LastER = "Hand Shake Error";
+                    }
                 }
             }
         }
