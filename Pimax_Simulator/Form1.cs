@@ -210,7 +210,7 @@ namespace Pimax_Simulator
         private void StartTimer()
         {
             t = new System.Windows.Forms.Timer();
-            t.Interval = 1000;
+            t.Interval = 2000;
             t.Tick += new EventHandler(t_Tick);
             t.Enabled = true;
         }
@@ -218,7 +218,7 @@ namespace Pimax_Simulator
         void t_Tick(object sender, EventArgs e)
         {
             Counter += 1;
-            if (Counter == 10)
+            if (Counter == 6)
             {
                 buttonHRST_Click(sender, e);
             }
