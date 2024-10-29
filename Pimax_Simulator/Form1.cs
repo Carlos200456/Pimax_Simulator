@@ -352,6 +352,7 @@ namespace Pimax_Simulator
                             // Assuming you have a form named 'myForm'
                             this.WindowState = FormWindowState.Normal;
                             NoPaso = false;
+                            NoPaso2 = true;
                         }
                         // logger.LogInfo("Turn On by Operator");
                         AutoON = true;
@@ -792,6 +793,8 @@ namespace Pimax_Simulator
             switch (message)
             {
                 case "EZ: ":
+                    this.Size = new Size(350, 130);
+                    this.Top = 960;
                     switch (msg)
                     {
                         case "SBE0\r":
@@ -843,6 +846,8 @@ namespace Pimax_Simulator
                     if (msg != "\r")
                     {
                         textBoxER.Text = "";
+                        this.Size = new Size(350, 130);
+                        this.Top = 960;
                     }
                     switch (msg)
                     {
@@ -851,6 +856,7 @@ namespace Pimax_Simulator
                             textBoxER.Text = "Disparo abortado por el operador";
                             this.Size = new Size(350, 130);
                             this.Top = 960;
+                            NoPaso2 = true;
                             logger.LogWarning("Disparo abortado por el operador");
                             break;
 
@@ -938,6 +944,7 @@ namespace Pimax_Simulator
                             textBoxER.Text = "Simulador Activado";
                             this.Size = new Size(350, 130);
                             this.Top = 960;
+                            NoPaso2 = true;
                             logger.LogWarning("Simulador Activado");
                             break;
 
@@ -1313,6 +1320,12 @@ namespace Pimax_Simulator
                 buttonPW.BackColor = Color.LightSkyBlue;
                 buttonPrep.Hide(); // Hide buttonPrep
                 buttonRX.Hide(); // Hide buttonRX
+                if (NoPaso2)
+                {
+                    this.Size = new Size(350, 130);
+                    this.Top = 960;
+                    NoPaso2 = false;
+                }
             }
 
             if ((textBox1.Text == "IDLE\r")) // || (textBox1.Text == "ERROR\r") || (textBox1.Text == "\r")
