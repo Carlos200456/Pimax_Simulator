@@ -29,6 +29,7 @@ namespace Pimax_Simulator
         string Serial1PortName, Serial1BaudRate, Serial1DataBits, Serial1StopBits, Serial1Parity, Serial2PortName, Serial2BaudRate, Serial2DataBits, Serial2StopBits, Serial2Parity;
         readonly string[] mA_Table = new string[8] { "50\r", "100\r", "200\r", "300\r", "400\r", "500\r", "600\r", "700\r" };
         readonly string[] ms_Table = new string[30] { "2\r", "5\r", "8\r", "10\r", "20\r", "30\r", "40\r", "50\r", "60\r", "80\r", "100\r", "120\r", "150\r", "200\r", "250\r", "300\r", "400\r", "500\r", "600\r", "800\r", "1000\r", "1200\r", "1500\r", "2000\r", "2500\r", "3000\r", "3500\r", "4000\r", "4500\r", "5000\r" };
+        readonly string[] mx_Table = new string[29] { "0.1", "0.25", "0.4", "0.5", "1", "1.5", "2", "2.5", "3", "4", "5", "6", "8", "10", "12", "16", "20", "24", "30", "40", "50", "60", "75", "100", "125", "150", "175", "200", "225" };
         Boolean ACK = false;
         Boolean NACK = false;
         Boolean AutoON = true;
@@ -38,6 +39,7 @@ namespace Pimax_Simulator
         Boolean NoPaso2 = true;
         int kvs, mas, mss, Counter, PROK, RXOK;
         float mxs;
+        Decimal mxd;
 
         string fileToCopy = "C:\\TechDX\\LogIFDUE.txt";
         string destinationDirectory = "G:\\My Drive\\Logs\\";
@@ -524,7 +526,7 @@ namespace Pimax_Simulator
         private void ShowData(object sender, EventArgs e)
         {
             string msg = dataIN;
-            int mA, ms;
+            int mA, ms, mx;
 
             if (dataIN.Substring(0, 1) == "V") msg = "VIT\r";
 
@@ -760,6 +762,128 @@ namespace Pimax_Simulator
                     dataOUT = "MAS" + textBoxmA.Text;
                     serialPort1.WriteLine(dataOUT + "\r");
                     dataOUT = "MXS" + textBoxmAs.Text;
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    break;
+
+                case "MX+\r":
+                    mxd = Convert.ToDecimal(textBoxmAs.Text);
+                    mx = 30;
+                    for (int i = 0; i <= 28; ++i)      //    Valores Maximo disponible 30
+                    {
+                        if (Convert.ToDecimal(mx_Table[i]) > mxd) { mx = i; break; }
+                    }
+                    if (mx < 9)
+                    {
+                        textBoxmAs.Text = mx_Table[mx];
+                        dataOUT = "MA050";
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        mss = (int) ((Convert.ToDecimal(textBoxmAs.Text) / (Decimal) 50) * (Decimal) 1000);
+                        dataOUT = "MS" + mss.ToString();
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        GUI_Sound(1);
+                    } else if (mx < 14)
+                    {
+                        textBoxmAs.Text = mx_Table[mx];
+                        dataOUT = "MA100";
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)100) * (Decimal)1000);
+                        dataOUT = "MS" + mss.ToString();
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        GUI_Sound(1);
+                    } else if (mx < 21)
+                    {
+                        textBoxmAs.Text = mx_Table[mx];
+                        dataOUT = "MA200";
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)200) * (Decimal)1000);
+                        dataOUT = "MS" + mss.ToString();
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        GUI_Sound(1);
+                    }
+                    else if (mx < 29)
+                    {
+                        textBoxmAs.Text = mx_Table[mx];
+                        dataOUT = "MA050";
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)50) * (Decimal)1000);
+                        dataOUT = "MS" + mss.ToString();
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        GUI_Sound(1);
+                    } else                    
+                    {
+                        GUI_Sound(6);
+                    }
+
+                    dataOUT = "MSS" + textBoxms.Text;
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    dataOUT = "MXS" + textBoxmAs.Text;
+                    // If dataOUT have only one character after the . add a zero
+                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    break;
+
+                case "MX-\r":
+                    mxd = Convert.ToDecimal(textBoxmAs.Text);
+                    mx = 30;
+                    for (int i = 28; i >= 0; --i)      //    Valores Maximo disponible 30
+                    {
+                        if (Convert.ToDecimal(mx_Table[i]) < mxd) { mx = i; break; }
+                    }
+                    if (mx == 30)
+                    {
+                        GUI_Sound(6);
+                        return;
+                    }
+                    if (mx >= 22)
+                    {
+                        textBoxmAs.Text = mx_Table[mx];
+                        dataOUT = "MA050";
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)50) * (Decimal)1000);
+                        dataOUT = "MS" + mss.ToString();
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        GUI_Sound(1);
+                    } 
+                    else if (mx >= 15)
+                    {
+                        textBoxmAs.Text = mx_Table[mx];
+                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)200) * (Decimal)1000);
+                        dataOUT = "MS" + mss.ToString();
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        dataOUT = "MA200";
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        GUI_Sound(1);
+                    }
+                    else if (mx >= 8)
+                    {
+                        textBoxmAs.Text = mx_Table[mx];
+                        dataOUT = "MA100";
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)100) * (Decimal)1000);
+                        dataOUT = "MS" + mss.ToString();
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        GUI_Sound(1);
+                    }
+                    else if (mx >= 0)
+                    {
+                        textBoxmAs.Text = mx_Table[mx];
+                        dataOUT = "MA050";
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)50) * (Decimal)1000);
+                        dataOUT = "MS" + mss.ToString();
+                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        GUI_Sound(1);
+                    }
+ 
+                    dataOUT = "MSS" + textBoxms.Text;
+                    serialPort1.WriteLine(dataOUT + "\r");
+                    dataOUT = "MXS" + textBoxmAs.Text;
+                    // If dataOUT have only one character after the . add a zero
+                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
                     serialPort1.WriteLine(dataOUT + "\r");
                     if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
                     serialPort1.WriteLine(dataOUT + "\r");
