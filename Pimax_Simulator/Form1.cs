@@ -177,7 +177,7 @@ namespace Pimax_Simulator
             configReader.Close();
 
             // Create a new isntance of XmlTextReader and call Read method to read the file  
-            configReader = new XmlTextReader(path + "Config_IF_mAs.xml");
+            configReader = new XmlTextReader("C:\\TechDX\\Config_IF_mAs.xml");
             try
             {
                 configReader.Read();
@@ -196,8 +196,12 @@ namespace Pimax_Simulator
                     {
                         string s1 = configReader.ReadElementContentAsString();
                         mx_Load_Table[i] = getBetween(s1, "mAs=", 4);
+                        mxs = Convert.ToSingle(mx_Load_Table[i]);
+                        mx_Load_Table[i] = mxs.ToString(System.Globalization.CultureInfo.InvariantCulture);
                         mA_Load_Table[i] = getBetween(s1, "mA=", 3);
                         ms_Load_Table[i] = getBetween(s1, "ms=", 4);
+                        mss = Convert.ToInt32(ms_Load_Table[i]);
+                        ms_Load_Table[i] = mss.ToString();
                     }
                 }
             }
@@ -800,124 +804,60 @@ namespace Pimax_Simulator
 
                 case "MX+\r":
                     mxd = Convert.ToDecimal(textBoxmAs.Text);
-                    mx = 30;
-                    for (int i = 0; i <= 28; ++i)      //    Valores Maximo disponible 30
+                    mx = 40;
+                    for (int i = 0; i < 34; ++i)      //    Valores Maximo disponible 34
                     {
                         if (Convert.ToDecimal(mx_Load_Table[i]) > mxd) { mx = i; break; }
                     }
-                    if (mx < 9)
+                    if (mx == 40) GUI_Sound(6);
+                    else
                     {
-                        textBoxmAs.Text = mx_Load_Table[mx];
-                        dataOUT = "MA050";
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        mss = (int) ((Convert.ToDecimal(textBoxmAs.Text) / (Decimal) 50) * (Decimal) 1000);
-                        dataOUT = "MS" + mss.ToString();
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
                         GUI_Sound(1);
-                    } else if (mx < 14)
-                    {
                         textBoxmAs.Text = mx_Load_Table[mx];
-                        dataOUT = "MA100";
+                        dataOUT = "MA" + mA_Load_Table[mx];
                         serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)100) * (Decimal)1000);
-                        dataOUT = "MS" + mss.ToString();
+                        mas = Convert.ToInt32(mA_Load_Table[mx]);
+                        dataOUT = "MS" + ms_Load_Table[mx];
                         serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        GUI_Sound(1);
-                    } else if (mx < 21)
-                    {
-                        textBoxmAs.Text = mx_Load_Table[mx];
-                        dataOUT = "MA200";
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)200) * (Decimal)1000);
-                        dataOUT = "MS" + mss.ToString();
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        GUI_Sound(1);
+                        // Send data to VXvue
+                        dataOUT = "MSS" + ms_Load_Table[mx];
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        dataOUT = "MXS" + mx_Load_Table[mx];
+                        // If dataOUT have only one character after the . add a zero
+                        if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
+                        serialPort1.WriteLine(dataOUT + "\r");
                     }
-                    else if (mx < 29)
-                    {
-                        textBoxmAs.Text = mx_Load_Table[mx];
-                        dataOUT = "MA050";
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)50) * (Decimal)1000);
-                        dataOUT = "MS" + mss.ToString();
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        GUI_Sound(1);
-                    } else                    
-                    {
-                        GUI_Sound(6);
-                    }
-
-                    dataOUT = "MSS" + textBoxms.Text;
-                    serialPort1.WriteLine(dataOUT + "\r");
-                    dataOUT = "MXS" + textBoxmAs.Text;
-                    // If dataOUT have only one character after the . add a zero
-                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
-                    serialPort1.WriteLine(dataOUT + "\r");
-                    if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
-                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 case "MX-\r":
                     mxd = Convert.ToDecimal(textBoxmAs.Text);
-                    mx = 30;
-                    for (int i = 28; i >= 0; --i)      //    Valores Maximo disponible 30
+                    mx = 40;
+                    for (int i = 33; i > 0; --i)      //    Valores Maximo disponible 34
                     {
                         if (Convert.ToDecimal(mx_Load_Table[i]) < mxd) { mx = i; break; }
                     }
-                    if (mx == 30)
+                    if (mx == 40) GUI_Sound(6);
+                    else
                     {
-                        GUI_Sound(6);
-                        return;
-                    }
-                    if (mx >= 22)
-                    {
-                        textBoxmAs.Text = mx_Load_Table[mx];
-                        dataOUT = "MA050";
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)50) * (Decimal)1000);
-                        dataOUT = "MS" + mss.ToString();
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
                         GUI_Sound(1);
-                    } 
-                    else if (mx >= 15)
-                    {
                         textBoxmAs.Text = mx_Load_Table[mx];
-                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)200) * (Decimal)1000);
-                        dataOUT = "MS" + mss.ToString();
+                        dataOUT = "MA" + mA_Load_Table[mx];
                         serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        dataOUT = "MA200";
+                        mas = Convert.ToInt32(mA_Load_Table[mx]);
+                        dataOUT = "MS" + ms_Load_Table[mx];
                         serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        GUI_Sound(1);
+                        // Send data to VXvue
+                        dataOUT = "MSS" + ms_Load_Table[mx];
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        dataOUT = "MXS" + mx_Load_Table[mx];
+                        // If dataOUT have only one character after the . add a zero
+                        if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
+                        serialPort1.WriteLine(dataOUT + "\r");
+                        if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
+                        serialPort1.WriteLine(dataOUT + "\r");
                     }
-                    else if (mx >= 8)
-                    {
-                        textBoxmAs.Text = mx_Load_Table[mx];
-                        dataOUT = "MA100";
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)100) * (Decimal)1000);
-                        dataOUT = "MS" + mss.ToString();
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        GUI_Sound(1);
-                    }
-                    else if (mx >= 0)
-                    {
-                        textBoxmAs.Text = mx_Load_Table[mx];
-                        dataOUT = "MA050";
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        mss = (int)((Convert.ToDecimal(textBoxmAs.Text) / (Decimal)50) * (Decimal)1000);
-                        dataOUT = "MS" + mss.ToString();
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        GUI_Sound(1);
-                    }
- 
-                    dataOUT = "MSS" + textBoxms.Text;
-                    serialPort1.WriteLine(dataOUT + "\r");
-                    dataOUT = "MXS" + textBoxmAs.Text;
-                    // If dataOUT have only one character after the . add a zero
-                    if (dataOUT.Substring(dataOUT.Length - 2, 1) == ".") dataOUT = dataOUT + "0";
-                    serialPort1.WriteLine(dataOUT + "\r");
-                    if (mas < 200) dataOUT = "FS"; else dataOUT = "FL";
-                    serialPort1.WriteLine(dataOUT + "\r");
                     break;
 
                 default:
