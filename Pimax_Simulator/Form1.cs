@@ -128,6 +128,9 @@ namespace Pimax_Simulator
         public Form1()
         {
             InitializeComponent();
+            kvs = 60;
+            mas = 200;
+            mss = 30;
             path = AppDomain.CurrentDomain.BaseDirectory;
             // SetImage(path + "About.png");
             // Create an isntance of XmlTextReader and call Read method to read the file  
@@ -814,11 +817,22 @@ namespace Pimax_Simulator
                     {
                         GUI_Sound(1);
                         textBoxmAs.Text = mx_Load_Table[mx];
-                        dataOUT = "MA" + mA_Load_Table[mx];
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        mas = Convert.ToInt32(mA_Load_Table[mx]);
-                        dataOUT = "MS" + ms_Load_Table[mx];
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        if (Convert.ToInt32(textBoxmA.Text) >= Convert.ToInt32(mA_Load_Table[mx]))
+                        {
+                            dataOUT = "MA" + mA_Load_Table[mx];
+                            serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                            mas = Convert.ToInt32(mA_Load_Table[mx]);
+                            dataOUT = "MS" + ms_Load_Table[mx];
+                            serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        }
+                        else
+                        {
+                            dataOUT = "MS" + ms_Load_Table[mx];
+                            serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                            dataOUT = "MA" + mA_Load_Table[mx];
+                            serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                            mas = Convert.ToInt32(mA_Load_Table[mx]);
+                        }
                         // Send data to VXvue
                         dataOUT = "MSS" + ms_Load_Table[mx];
                         serialPort1.WriteLine(dataOUT + "\r");
@@ -834,7 +848,7 @@ namespace Pimax_Simulator
                 case "MX-\r":
                     mxd = Convert.ToDecimal(textBoxmAs.Text);
                     mx = 40;
-                    for (int i = 33; i > 0; --i)      //    Valores Maximo disponible 34
+                    for (int i = 33; i >= 0; --i)      //    Valores Maximo disponible 34
                     {
                         if (Convert.ToDecimal(mx_Load_Table[i]) < mxd) { mx = i; break; }
                     }
@@ -843,11 +857,22 @@ namespace Pimax_Simulator
                     {
                         GUI_Sound(1);
                         textBoxmAs.Text = mx_Load_Table[mx];
-                        dataOUT = "MA" + mA_Load_Table[mx];
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
-                        mas = Convert.ToInt32(mA_Load_Table[mx]);
-                        dataOUT = "MS" + ms_Load_Table[mx];
-                        serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        if (Convert.ToInt32(textBoxmA.Text) >= Convert.ToInt32(mA_Load_Table[mx]))
+                        {
+                            dataOUT = "MA" + mA_Load_Table[mx];
+                            serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                            mas = Convert.ToInt32(mA_Load_Table[mx]);
+                            dataOUT = "MS" + ms_Load_Table[mx];
+                            serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                        }
+                        else
+                        {
+                            dataOUT = "MS" + ms_Load_Table[mx];
+                            serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                            dataOUT = "MA" + mA_Load_Table[mx];
+                            serialPort2.WriteLine(dataOUT);   // Send data to Generator
+                            mas = Convert.ToInt32(mA_Load_Table[mx]);
+                        }
                         // Send data to VXvue
                         dataOUT = "MSS" + ms_Load_Table[mx];
                         serialPort1.WriteLine(dataOUT + "\r");
